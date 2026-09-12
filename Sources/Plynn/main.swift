@@ -1,5 +1,6 @@
 import AppKit
 import PlynnKit
+import PlynnCodeContext
 import Sparkle
 
 @MainActor
@@ -31,6 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Captured at fn-down so formatting uses the original target app.
     var pendingContext: ContextSnapshot?
     var pendingFileCandidates: Task<[String], Never>?
+    var pendingCodeSymbols: Task<[CodeSymbol], Never>?
 
     // Meeting mode
     var meetingRecorder: MeetingRecorder?
@@ -165,11 +167,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let context = ContextSnapshot(
                 bundleID: bundleID,
                 selectedText: SelectionReader.selectedText(),
-                workspaceRoot: CodexCLIContextReader.read()?.workspaceRoot)
+                workspaceRoot: bundleID == CodexDesktopWorkspace.bundleID
+                    ? CodexDesktopWorkspace.configuredRoot
+                    : CodexCLIContextReader.read()?.workspaceRoot)
             pendingContext = context
             if context.profile.isTechnical, let workspaceRoot = context.workspaceRoot {
                 pendingFileCandidates = Task.detached(priority: .utility) {
                     WorkspaceFileIndex.candidates(at: workspaceRoot)
+                }
+                if UserDefaults.standard.bool(forKey: "codeContextEnabled") {
+                    pendingCodeSymbols = Task.detached(priority: .utility) {
+                        await WorkspaceCodeIndex.shared.symbols(at: workspaceRoot)
+                    }
                 }
             }
 
@@ -247,8 +256,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let context = pendingContext ?? ContextSnapshot(
                 bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
             let fileCandidatesTask = pendingFileCandidates
+            let codeSymbolsTask = pendingCodeSymbols
             pendingContext = nil
             pendingFileCandidates = nil
+            pendingCodeSymbols = nil
             let bundleID = context.bundleID
             Task {
                 await feedTask?.value  // all chunks fed, in order
@@ -314,7 +325,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 let fileCandidates = await fileCandidatesTask?.value ?? []
                 let result = await formatter.format(
                     raw,
-                    context: context.withFileCandidates(fileCandidates),
+                    context: context.withFileCandidates(fileCandidates)
+                        .withCodeSymbols(await codeSymbolsTask?.value ?? []),
                     aiPolish: aiPolish)
                 if let transcriptionReleaseAt {
                     NSLog("plynn: [fn-release-to-format %@] ai-polish %d",
@@ -347,6 +359,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             pendingContext = nil
             pendingFileCandidates?.cancel()
             pendingFileCandidates = nil
+            pendingCodeSymbols?.cancel()
+            pendingCodeSymbols = nil
             let discarded = recorder?.stop() ?? []
             // Stay silent for the sub-minHold taps that also discard — including
             // the first half of a hands-free double-tap, where a cancel cue

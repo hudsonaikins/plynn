@@ -1,4 +1,5 @@
 import Foundation
+import PlynnCodeContext
 
 public struct FormatResult: Equatable, Sendable {
     public let text: String
@@ -82,14 +83,32 @@ public actor TranscriptFormatter {
         text = SnippetExpander.expand(text, snippets: snippets)
         text = DictionaryCorrector.correct(text, terms: terms)
         let profile = context.profile
+        let protected = Set(terms.flatMap { [$0.text] + $0.aliases }.map { $0.lowercased() })
+        let codeHints = profile.isTechnical
+            ? CodeVocabulary.relevant(to: text, symbols: context.codeSymbols).filter {
+                !protected.contains($0.name.lowercased())
+                    && !protected.contains(CodeVocabulary.spokenWords($0.name))
+            } : []
+        let codeWords = Set(text.lowercased().split { !$0.isLetter }.map(String.init))
+        let explicitCodeAction = !codeWords.isDisjoint(with: [
+            "call", "invoke", "rename", "refactor", "import", "implement", "override",
+            "initialize", "instantiate", "update", "function", "method", "class", "struct",
+            "enum", "parameter", "property", "variable", "identifier", "symbol",
+        ])
+        let codeTerms = codeHints.enumerated().map { offset, symbol in
+            PersonalStore.Term(id: -1 - Int64(offset), text: symbol.name,
+                               aliases: explicitCodeAction ? [CodeVocabulary.spokenWords(symbol.name)] : [])
+        }
         if profile.isTechnical {
             text = ReferenceResolver.tagFileReferences(
                 text, terms: terms, fileCandidates: context.fileCandidates)
         }
         // Latency gate: clean short dictations paste instantly; the LLM only
         // runs when there are fillers/backtracks/lists to fix or it's long.
-        if aiPolish, !text.isEmpty, PolishGate.needsPolish(text) {
-            let spellings = DictionaryCorrector.relevantTerms(for: text, terms: terms)
+        text = DictionaryCorrector.correct(text, terms: codeTerms)
+        if aiPolish, !text.isEmpty, PolishGate.needsPolish(text) || !codeHints.isEmpty {
+            let spellings = Array(Set(DictionaryCorrector.relevantTerms(for: text, terms: terms)
+                + codeHints.map(\.name))).sorted()
             if appleFM.ready {
                 text = await appleFM.format(
                     text, tone: profile.tone, technical: profile.isTechnical,
@@ -106,6 +125,7 @@ public actor TranscriptFormatter {
                     text, terms: terms, fileCandidates: context.fileCandidates)
             }
         }
+        text = DictionaryCorrector.correct(text, terms: codeTerms)
         return FormatResult(text: text, pressEnter: rules.pressEnter, verbatim: transcript)
     }
 

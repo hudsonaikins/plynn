@@ -40,6 +40,26 @@ If cached model startup times out, the setup window tells you to relaunch
 Plynn. A transcript is copied to the clipboard when the focused field cannot
 be safely targeted, so you can press `⌘V` manually.
 
+### Coding context
+
+In Settings, choose the repository folder open in Codex Desktop. Filename
+references work without terminal setup. Enable **Use code vocabulary** to also
+recognize identifiers from Swift, JavaScript, TypeScript/TSX, and Python source.
+For example, “context snapshot” can become `ContextSnapshot` when that name
+exists in the selected repository. Your explicit dictionary takes precedence.
+
+Source indexing is off by default and requires a Git workspace. It reads source
+locally in the background, respects Git ignore rules, and excludes hidden paths,
+symlinks, and common dependency/build folders. Each refresh is bounded to 500
+files, 256 KB per file, 8 MB total, and a 600 ms parsing window. Only relevant
+identifier spellings reach the existing on-device polish model; comments and
+string values are excluded. The index stays in memory and refreshes from current
+file contents. Ambiguous spellings and ordinary prose retain the existing path.
+
+Workspace selection is explicit: Plynn does not automatically discover Codex
+Desktop's active file or understand arbitrary program behavior. Unsupported
+languages and unavailable context retain filename/dictionary formatting.
+
 ### Optional Codex CLI context
 
 Plynn can resolve spoken filenames against the local repository used by Codex CLI. Source `scripts/plynn-codex-context.zsh` from your `~/.zshrc`, then launch Codex with `plynn_codex` instead of `codex`:
@@ -49,7 +69,7 @@ source /path/to/plynn/scripts/plynn-codex-context.zsh
 plynn_codex
 ```
 
-The bridge shares the workspace path only. Plynn indexes bounded, unique filenames locally; it does not read file contents or send context over the network.
+With code vocabulary off, the bridge shares the workspace path only. Plynn indexes bounded, unique filenames locally; it does not read file contents or send context over the network.
 
 ## How it's put together
 

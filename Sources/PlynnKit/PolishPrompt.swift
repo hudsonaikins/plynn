@@ -48,6 +48,7 @@ public enum PolishPrompt {
             break
         }
         if technical {
+            p += "\n- Code spelling hints may resemble ordinary phrases. Keep ordinary prose unchanged unless the speaker is referring to code."
             p += "\n- Preserve technical terms, code identifiers (camelCase, snake_case), file names, shell commands, and explicit @file references exactly. Do not invent or remove @file references."
         }
         if !preferredSpellings.isEmpty {

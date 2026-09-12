@@ -20,6 +20,7 @@ final class AppCategoriesTests: XCTestCase {
         XCTAssertTrue(terminal.isTechnical)
         XCTAssertTrue(AppCategories.profile(forBundleID: "com.todesktop.230313mzl4w4u92").isTechnical) // Cursor
         XCTAssertTrue(AppCategories.profile(forBundleID: "com.microsoft.VSCode").isTechnical)
+        XCTAssertTrue(AppCategories.profile(forBundleID: CodexDesktopWorkspace.bundleID).isTechnical)
     }
 
     func testUnknownDefaultsNeutral() {

@@ -60,6 +60,14 @@ final class ReferenceResolverTests: XCTestCase {
             aiPolish: false)
         XCTAssertEqual(technical.text, "Open @main.swift")
 
+        let codexDesktop = await formatter.format(
+            "review package dot swift",
+            context: ContextSnapshot(
+                bundleID: CodexDesktopWorkspace.bundleID,
+                fileCandidates: ["Package.swift"]),
+            aiPolish: false)
+        XCTAssertEqual(codexDesktop.text, "Review @Package.swift")
+
         let general = await formatter.format(
             "open main dot swift",
             context: ContextSnapshot(bundleID: "com.apple.MobileSMS"),
