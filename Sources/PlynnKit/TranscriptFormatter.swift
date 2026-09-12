@@ -82,6 +82,15 @@ public actor TranscriptFormatter {
         var text = rules.text
         text = SnippetExpander.expand(text, snippets: snippets)
         text = DictionaryCorrector.correct(text, terms: terms)
+        var sourceResolved = false
+        if aiPolish, let request = CodeReferenceResolver.prepare(text, context: context),
+           await polishEngine != nil {
+            let resolved = request.applying(await complete(request.prompt))
+            sourceResolved = resolved != text
+            text = resolved
+            // User vocabulary still wins after a source-backed resolution.
+            text = DictionaryCorrector.correct(text, terms: terms)
+        }
         let profile = context.profile
         let protected = Set(terms.flatMap { [$0.text] + $0.aliases }.map { $0.lowercased() })
         let codeHints = profile.isTechnical
@@ -106,7 +115,7 @@ public actor TranscriptFormatter {
         // Latency gate: clean short dictations paste instantly; the LLM only
         // runs when there are fillers/backtracks/lists to fix or it's long.
         text = DictionaryCorrector.correct(text, terms: codeTerms)
-        if aiPolish, !text.isEmpty, PolishGate.needsPolish(text) || !codeHints.isEmpty {
+        if aiPolish, !text.isEmpty, PolishGate.needsPolish(text) || (!sourceResolved && !codeHints.isEmpty) {
             let spellings = Array(Set(DictionaryCorrector.relevantTerms(for: text, terms: terms)
                 + codeHints.map(\.name))).sorted()
             if appleFM.ready {

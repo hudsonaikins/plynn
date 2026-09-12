@@ -48,6 +48,7 @@ struct SettingsPane: View {
     @AppStorage("hotkeyTrigger") private var hotkeyTrigger: HotkeyTrigger = .fn
     @AppStorage(CodexDesktopWorkspace.defaultsKey) private var codexDesktopWorkspace = ""
     @AppStorage("codeContextEnabled") private var codeContextEnabled = false
+    @AppStorage("codeSourceContextEnabled") private var codeSourceContextEnabled = false
     @AppStorage("aiPolish") private var aiPolish = true
     @AppStorage("learnCorrections") private var learnCorrections = true
     @AppStorage("soundEffects") private var soundEffects = true
@@ -99,10 +100,12 @@ struct SettingsPane: View {
             }
             Section {
                 Toggle("Use code vocabulary", isOn: $codeContextEnabled)
+                Toggle("Understand code references", isOn: $codeSourceContextEnabled)
+                    .disabled(!codeContextEnabled || !aiPolish)
             } header: {
                 Text("Coding context")
             } footer: {
-                Text("Read Swift, JavaScript, TypeScript, and Python source in the selected Git workspace to recognize coding terms. Only relevant identifiers reach the local model. Comments and string values are excluded. Everything stays on this Mac.")
+                Text("Code vocabulary recognizes names in Swift, JavaScript, TypeScript, and Python. Understand code references also sends small relevant source excerpts, including comments and string values, to the local model so descriptions can resolve to code names. Requires code vocabulary and AI polish. Everything stays on this Mac.")
             }
             Section {
                 Toggle("AI polish", isOn: $aiPolish)

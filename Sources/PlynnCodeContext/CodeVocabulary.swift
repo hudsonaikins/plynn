@@ -41,17 +41,33 @@ public enum CodeVocabulary {
         guard let tree = parser.parse(source), let root = tree.rootNode else { return [] }
         let text = source as NSString
         var stack = [root]
-        var seen = Set<String>()
+        var positions: [String: Int] = [:]
         var symbols: [CodeSymbol] = []
+        let declarations = ["class_declaration": "class", "class_definition": "class",
+            "function_declaration": "function", "function_definition": "function",
+            "method_definition": "method", "method_declaration": "method",
+            "property_declaration": "property", "public_field_definition": "property",
+            "variable_declarator": "variable", "enum_declaration": "enum"]
         while let node = stack.popLast() {
             if Task.isCancelled { return [] }
-            if identifierTypes.contains(node.nodeType ?? ""), NSMaxRange(node.range) <= text.length {
-                let name = text.substring(with: node.range)
-                if validIdentifier(name), seen.insert(name).inserted {
-                    symbols.append(CodeSymbol(name: name, file: file, kind: node.nodeType ?? "identifier"))
-                    if symbols.count == 500 { break }
+            if let defaultKind = declarations[node.nodeType ?? ""],
+               let nameNode = node.child(byFieldName: "name"), NSMaxRange(nameNode.range) <= text.length {
+                let name = text.substring(with: nameNode.range)
+                if validIdentifier(name) {
+                    let kind = node.child(byFieldName: "declaration_kind").map { text.substring(with: $0.range) } ?? defaultKind
+                    let symbol = CodeSymbol(name: name, file: file, kind: kind)
+                    if let position = positions[name] { symbols[position] = symbol }
+                    else { positions[name] = symbols.count; symbols.append(symbol) }
                 }
             }
+            if identifierTypes.contains(node.nodeType ?? ""), NSMaxRange(node.range) <= text.length {
+                let name = text.substring(with: node.range)
+                if validIdentifier(name), positions[name] == nil {
+                    positions[name] = symbols.count
+                    symbols.append(CodeSymbol(name: name, file: file, kind: node.nodeType ?? "identifier"))
+                }
+            }
+            if symbols.count >= 500 { break }
             for index in (0..<node.namedChildCount).reversed() {
                 if let child = node.namedChild(at: index) { stack.append(child) }
             }

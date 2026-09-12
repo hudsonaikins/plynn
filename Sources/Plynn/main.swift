@@ -32,7 +32,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Captured at fn-down so formatting uses the original target app.
     var pendingContext: ContextSnapshot?
     var pendingFileCandidates: Task<[String], Never>?
-    var pendingCodeSymbols: Task<[CodeSymbol], Never>?
+    var pendingCodeSymbols: Task<CodeWorkspaceContext, Never>?
 
     // Meeting mode
     var meetingRecorder: MeetingRecorder?
@@ -176,8 +176,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     WorkspaceFileIndex.candidates(at: workspaceRoot)
                 }
                 if UserDefaults.standard.bool(forKey: "codeContextEnabled") {
+                    let includeSource = UserDefaults.standard.bool(forKey: "codeSourceContextEnabled")
                     pendingCodeSymbols = Task.detached(priority: .utility) {
-                        await WorkspaceCodeIndex.shared.symbols(at: workspaceRoot)
+                        await WorkspaceCodeIndex.shared.snapshot(at: workspaceRoot, includeSource: includeSource)
                     }
                 }
             }
@@ -326,7 +327,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 let result = await formatter.format(
                     raw,
                     context: context.withFileCandidates(fileCandidates)
-                        .withCodeSymbols(await codeSymbolsTask?.value ?? []),
+                        .withCodeContext(await codeSymbolsTask?.value ?? CodeWorkspaceContext()),
                     aiPolish: aiPolish)
                 if let transcriptionReleaseAt {
                     NSLog("plynn: [fn-release-to-format %@] ai-polish %d",

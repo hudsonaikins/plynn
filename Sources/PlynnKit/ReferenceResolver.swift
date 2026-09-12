@@ -33,7 +33,7 @@ public enum ReferenceResolver {
         var result = text
         for candidate in candidates {
             guard let regex = try? NSRegularExpression(
-                pattern: "(?i)(?<![@A-Za-z0-9_])"
+                pattern: "(?i)(?<![@/\\\\A-Za-z0-9_])"
                     + NSRegularExpression.escapedPattern(for: candidate.phrase)
                     + "(?![A-Za-z0-9_.])"
             ) else { continue }

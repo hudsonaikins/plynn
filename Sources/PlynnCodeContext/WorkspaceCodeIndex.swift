@@ -3,7 +3,8 @@ import CryptoKit
 import Darwin
 
 /// In-memory index of the explicitly selected Git workspace. Refresh work is
-/// bounded and cancellable; no disk cache or source text reaches the model.
+/// bounded and cancellable. Source is retained only in an explicitly requested
+/// snapshot, never in the vocabulary cache or on disk.
 public actor WorkspaceCodeIndex {
     public static let shared = WorkspaceCodeIndex()
     private var cachedRoot: String?
@@ -11,16 +12,21 @@ public actor WorkspaceCodeIndex {
     public init() {}
 
     public func symbols(at root: String) -> [CodeSymbol] {
+        snapshot(at: root).symbols
+    }
+
+    public func snapshot(at root: String, includeSource: Bool = false) -> CodeWorkspaceContext {
         if cachedRoot != root { cached.removeAll(); cachedRoot = root }
-        guard !Task.isCancelled, let names = Self.gitFiles(at: root) else { return [] }
+        guard !Task.isCancelled, let names = Self.gitFiles(at: root) else { return CodeWorkspaceContext() }
         let rootURL = URL(fileURLWithPath: root).standardizedFileURL.resolvingSymlinksInPath()
         let started = ContinuousClock.now
         var result: [CodeSymbol] = []
+        var files: [CodeSourceFile] = []
         var retained: [String: (digest: SHA256.Digest, symbols: [CodeSymbol])] = [:]
         var bytes = 0
         var count = 0
         for name in names.sorted() {
-            if Task.isCancelled { return [] }
+            if Task.isCancelled { return CodeWorkspaceContext() }
             if started.duration(to: .now) > .milliseconds(600) { break }
             guard Self.allowedPath(name) else { continue }
             let file = rootURL.appendingPathComponent(name).standardizedFileURL
@@ -46,9 +52,12 @@ public actor WorkspaceCodeIndex {
             }
             retained[name] = (digest, symbols)
             result += symbols
+            if includeSource, !symbols.isEmpty {
+                files.append(CodeSourceFile(path: name, source: source))
+            }
         }
         cached = retained
-        return result
+        return CodeWorkspaceContext(symbols: result, files: files)
     }
 
     /// Anchor every path component to an open directory descriptor. Concurrent

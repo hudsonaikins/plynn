@@ -56,8 +56,19 @@ identifier spellings reach the existing on-device polish model; comments and
 string values are excluded. The index stays in memory and refreshes from current
 file contents. Ambiguous spellings and ordinary prose retain the existing path.
 
+Enable **Understand code references** separately to resolve descriptions such as
+“the struct holding dictation context” against source. This requires code vocabulary
+and AI polish. Up to three relevant source excerpts, each limited to 1,600 characters,
+reach the existing local model. Unlike vocabulary-only mode, these excerpts can
+include comments and string values. Source stays in the recording's snapshot and
+is not written to an index on disk. The model proposes one exact phrase replacement
+with a known symbol or file path; invalid answers retain the original dictation.
+Ambiguous or unsupported descriptions should remain unchanged. This is bounded
+source-assisted reference resolution, not whole-program analysis or code Q&A.
+
 Workspace selection is explicit: Plynn does not automatically discover Codex
-Desktop's active file or understand arbitrary program behavior. Unsupported
+Desktop's active file. Retrieval uses matching words and nearby source lines, so
+descriptions with no shared vocabulary can remain unresolved. Unsupported
 languages and unavailable context retain filename/dictionary formatting.
 
 ### Optional Codex CLI context
