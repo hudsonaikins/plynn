@@ -1,4 +1,5 @@
 import Observation
+import AppKit
 import PlynnKit
 import ServiceManagement
 import SwiftUI
@@ -45,6 +46,7 @@ struct MainView: View {
 struct SettingsPane: View {
     @Bindable var engineManager: EngineManager
     @AppStorage("hotkeyTrigger") private var hotkeyTrigger: HotkeyTrigger = .fn
+    @AppStorage(CodexDesktopWorkspace.defaultsKey) private var codexDesktopWorkspace = ""
     @AppStorage("aiPolish") private var aiPolish = true
     @AppStorage("learnCorrections") private var learnCorrections = true
     @AppStorage("soundEffects") private var soundEffects = true
@@ -73,6 +75,26 @@ struct SettingsPane: View {
                 Text("Hotkey")
             } footer: {
                 Text("fn works on Apple keyboards. Some third-party keyboards (NuPhy, Keychron, and similar compact boards) implement Fn as a local layer key that never reaches macOS as fn. If holding fn does nothing, switch to Right Option, Right Command, or Right Control instead. Takes effect immediately.")
+            }
+            Section {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Workspace folder")
+                        .font(.headline)
+                    Text(codexWorkspaceLabel)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
+                }
+                HStack {
+                    Button("Choose Folder…") { chooseCodexWorkspace() }
+                    if !codexDesktopWorkspace.isEmpty {
+                        Button("Clear", role: .destructive) { codexDesktopWorkspace = "" }
+                    }
+                }
+            } header: {
+                Text("Codex Desktop")
+            } footer: {
+                Text("Choose the same repository folder opened in Codex Desktop. Plynn uses unique filenames only and tags them when Codex Desktop is focused. No terminal setup needed.")
             }
             Section {
                 Toggle("AI polish", isOn: $aiPolish)
@@ -135,6 +157,23 @@ struct SettingsPane: View {
             }
         }
         .formStyle(.grouped)
+    }
+
+    private var codexWorkspaceLabel: String {
+        guard let root = CodexDesktopWorkspace.configuredRoot else {
+            return codexDesktopWorkspace.isEmpty ? "Not selected" : "Folder unavailable"
+        }
+        return root
+    }
+
+    private func chooseCodexWorkspace() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Choose Workspace"
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        codexDesktopWorkspace = url.standardizedFileURL.path
     }
 
     private func socialButton(_ title: String, _ urlString: String) -> some View {

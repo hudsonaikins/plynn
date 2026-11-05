@@ -18,7 +18,13 @@ I built this because I loved what Wispr Flow could do but didn't love sending my
 
 ## Install
 
-Grab it at [plynn.vercel.app](https://plynn.vercel.app), or grab `Plynn.dmg` from [Releases](../../releases), drag Plynn to Applications, and launch. The app is notarized, so there's nothing to bypass. Onboarding asks for microphone and accessibility permissions, and the speech models (about 1 GB) download in the background while Apple's built-in engine covers your first dictations.
+Grab it at [plynn.vercel.app](https://plynn.vercel.app), or grab `Plynn.dmg` from [Releases](../../releases), drag Plynn to Applications, and launch it from Applications or Spotlight. Plynn is a menu-bar app, so it does not appear in the Dock or Cmd-Tab. Use the Plynn icon near the clock to open settings or quit. The app is notarized, so there's nothing to bypass. Onboarding asks for microphone and accessibility permissions, and the speech models (about 1 GB) download in the background while Apple's built-in engine covers your first dictations.
+
+If the menu bar is hidden in full screen, move the pointer to the top of the
+screen or set Apple menu → System Settings → Menu Bar → Automatically hide and
+show the menu bar → Never. Remove built-in icons in Menu Bar settings, or
+Command-drag removable icons out of the bar. Third-party icons must be disabled
+from their own apps.
 
 Requires macOS 26 (Tahoe) on Apple Silicon. Enable Apple Intelligence in System Settings to get the best polish engine.
 
@@ -31,6 +37,14 @@ cd plynn
 ```
 
 You'll need Xcode 26 with the Metal toolchain component (`xcodebuild -downloadComponent MetalToolchain`). The build uses `xcodebuild` rather than plain `swift build` because the MLX Metal shaders require it. `swift test` runs the 80+ unit tests.
+
+### Codex Desktop context
+
+In Plynn Settings, choose the repository folder opened in Codex Desktop. When
+Codex Desktop is focused, Plynn tags unique spoken filenames such as
+`package dot swift` as `@Package.swift`. Plynn indexes filenames only; it does
+not read file contents or send context over the network. No terminal setup is
+needed.
 
 ### Optional Codex CLI context
 

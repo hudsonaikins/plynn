@@ -7,6 +7,24 @@ public struct CodexCLIContext: Equatable, Sendable {
     public let updatedAt: Date
 }
 
+public enum CodexDesktopWorkspace {
+    public static let bundleID = "com.openai.codex"
+    public static let defaultsKey = "codexDesktopWorkspace"
+
+    public static var configuredRoot: String? {
+        let raw = UserDefaults.standard.string(forKey: defaultsKey)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !raw.isEmpty else { return nil }
+
+        let root = URL(fileURLWithPath: raw).standardizedFileURL.path
+        var isDirectory = ObjCBool(false)
+        guard FileManager.default.fileExists(atPath: root, isDirectory: &isDirectory),
+            isDirectory.boolValue
+        else { return nil }
+        return root
+    }
+}
+
 public enum CodexCLIContextReader {
     public static var defaultURL: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]

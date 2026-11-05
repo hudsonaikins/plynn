@@ -17,6 +17,9 @@ struct OnboardingView: View {
                 .font(.title2.bold())
             Text("Three quick steps, then hold **fn** anywhere and talk.")
                 .foregroundStyle(.secondary)
+            Text("Plynn runs in the menu bar, not the Dock. Launch it from Applications or Spotlight, then use the Plynn icon near the clock.")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
             Text("Using a third-party keyboard and fn doesn't do anything? Change the activation key under Settings → Hotkey.")
                 .font(.caption)
                 .foregroundStyle(.tertiary)
@@ -26,7 +29,7 @@ struct OnboardingView: View {
                 Button("Grant") { Permissions.requestMic() }
             }
             row(done: ax, title: "Accessibility",
-                detail: "Lets Plynn see the fn key and paste text for you.") {
+                detail: "Lets Plynn see the fn key and paste text for you. If it is not listed, click + and choose Plynn from Applications.") {
                 Button("Grant") {
                     Permissions.promptAccessibility()
                     Permissions.openAccessibilitySettings()

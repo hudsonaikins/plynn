@@ -30,6 +30,7 @@ public enum AppCategories {
     ]
 
     private static let technical: Set<String> = [
+        "com.openai.codex",
         "com.apple.Terminal",
         "com.googlecode.iterm2",
         "dev.warp.Warp-Stable",

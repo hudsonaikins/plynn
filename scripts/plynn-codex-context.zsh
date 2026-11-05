@@ -15,10 +15,10 @@ _plynn_codex_publish() {
 }
 
 plynn_codex() {
-    local status
+    local exit_status
     _plynn_codex_publish || return 1
     command codex "$@"
-    status=$?
+    exit_status=$?
     rm -f -- "$(_plynn_codex_context_path)"
-    return $status
+    return $exit_status
 }

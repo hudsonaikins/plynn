@@ -152,7 +152,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let context = ContextSnapshot(
                 bundleID: bundleID,
                 selectedText: SelectionReader.selectedText(),
-                workspaceRoot: CodexCLIContextReader.read()?.workspaceRoot)
+                workspaceRoot: bundleID == CodexDesktopWorkspace.bundleID
+                    ? CodexDesktopWorkspace.configuredRoot
+                    : CodexCLIContextReader.read()?.workspaceRoot)
             pendingContext = context
             if context.profile.isTechnical, let workspaceRoot = context.workspaceRoot {
                 pendingFileCandidates = Task.detached(priority: .utility) {
