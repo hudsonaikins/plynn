@@ -3,10 +3,16 @@ import Foundation
 public struct CodeWorkspaceContext: Equatable, Sendable {
     public let symbols: [CodeSymbol]
     public let files: [CodeSourceFile]
+    public let vocabulary: [WorkspaceVocabularyTerm]
 
-    public init(symbols: [CodeSymbol] = [], files: [CodeSourceFile] = []) {
+    public init(
+        symbols: [CodeSymbol] = [],
+        files: [CodeSourceFile] = [],
+        vocabulary: [WorkspaceVocabularyTerm] = []
+    ) {
         self.symbols = symbols
         self.files = files
+        self.vocabulary = vocabulary
     }
 }
 

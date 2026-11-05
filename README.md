@@ -9,7 +9,7 @@ I built this because I loved what Wispr Flow could do but didn't love sending my
 ## What it does
 
 - **Hold fn and talk.** Live transcript streams into a floating glass pill while you speak. Release and it pastes. On an M-series Mac the paste lands in well under a second for typical dictations.
-- **AI polish, on-device.** Fillers removed, self-corrections applied ("ship friday actually monday" becomes "ship on Monday"), spoken lists formatted, tone matched to the app you're in. Casual in Messages, proper in Mail. Runs on Apple Intelligence, with a local Qwen fallback.
+- **AI polish, on-device.** Fillers removed, self-corrections applied ("ship friday actually monday" becomes "ship on Monday"), spoken lists formatted, tone matched to the app you're in. Casual in Messages, proper in Mail. Uses Apple Intelligence when enabled, or an optional local Granite MLX server; deterministic formatting remains available without either.
 - **Command mode.** Select any text, hold fn, and say what to do with it: "make this shorter", "fix the grammar". The selection gets replaced in place.
 - **It learns your words.** Add names and jargon to your dictionary (or import a CSV), and when you fix a word right after a paste, Plynn notices and learns the correction on its own.
 - **Snippets.** Say "my email" and your actual email comes out.
@@ -30,7 +30,7 @@ cd plynn
 ./scripts/make-app.sh
 ```
 
-You'll need Xcode 26 with the Metal toolchain component (`xcodebuild -downloadComponent MetalToolchain`). The build uses `xcodebuild` rather than plain `swift build` because the MLX Metal shaders require it. `swift test` runs the unit tests.
+You'll need Xcode 26 with the Metal toolchain component (`xcodebuild -downloadComponent MetalToolchain`). Use `./scripts/make-app.sh` to build the macOS app; `swift test` runs the unit tests.
 
 ### Startup recovery
 
@@ -86,7 +86,7 @@ With code vocabulary off, the bridge shares the workspace path only. Plynn index
 
 Speech recognition is Parakeet Unified running on the Neural Engine via [FluidAudio](https://github.com/FluidInference/FluidAudio), streaming partials as you speak. A deterministic rules pass handles spoken punctuation instantly, then a small on-device language model does the heavier cleanup, but only when the transcript actually needs it. Clean short dictations skip the model entirely and paste immediately. A latency gate, basically.
 
-Your dictionary, snippets, and history live in one SQLite file at `~/Library/Application Support/Plynn/`. Dictation text stays on the Mac; first use downloads the local speech and polish models. There's no account, no telemetry, and no transcript upload.
+Your dictionary, snippets, and history live in one SQLite file at `~/Library/Application Support/Plynn/`. Dictation text stays on the Mac; first use downloads the local speech model. Apple Intelligence formatting uses the system-provided on-device model when enabled. An optional Granite server listens only on this Mac; Plynn never uploads transcripts to a remote API. There's no account or telemetry.
 
 See [ROADMAP.md](docs/ROADMAP.md) for what's next, including swappable polish models.
 

@@ -1,5 +1,15 @@
 import Foundation
 
+public struct DictationVocabularyTerm: Equatable, Sendable {
+    public let text: String
+    public let aliases: [String]
+
+    public init(text: String, aliases: [String] = []) {
+        self.text = text
+        self.aliases = aliases
+    }
+}
+
 /// A streaming dictation engine: feed 16 kHz mono samples, get live partials
 /// via callback and a final transcript from finish(). Implementations:
 /// `StreamingTranscriber` (Parakeet, local download) and `AppleSpeechEngine`
@@ -8,8 +18,13 @@ public protocol DictationEngine: Actor {
     nonisolated var displayName: String { get }
     /// Load whatever the engine needs (idempotent) and reset for a new session.
     func start() async throws
+    func setVocabulary(_ terms: [DictationVocabularyTerm]) async
     func setPartialCallback(_ callback: @escaping @Sendable (String) -> Void) async
     func append(samples: [Float]) async throws
     /// Final transcript — empty string when nothing usable was said.
     func finish() async throws -> String
+}
+
+public extension DictationEngine {
+    func setVocabulary(_: [DictationVocabularyTerm]) async {}
 }

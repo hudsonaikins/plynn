@@ -22,13 +22,16 @@ public actor WorkspaceCodeIndex {
         let started = ContinuousClock.now
         var result: [CodeSymbol] = []
         var files: [CodeSourceFile] = []
+        var vocabulary: [WorkspaceVocabularyTerm] = []
         var retained: [String: (digest: SHA256.Digest, symbols: [CodeSymbol])] = [:]
         var bytes = 0
         var count = 0
         for name in names.sorted() {
             if Task.isCancelled { return CodeWorkspaceContext() }
             if started.duration(to: .now) > .milliseconds(600) { break }
-            guard Self.allowedPath(name) else { continue }
+            let isCode = Self.allowedPath(name)
+            let isManifest = ManifestVocabulary.supports(name)
+            guard isCode || isManifest else { continue }
             let file = rootURL.appendingPathComponent(name).standardizedFileURL
             guard file.path.hasPrefix(rootURL.path + "/"),
                 file.resolvingSymlinksInPath().path == file.path,
@@ -43,6 +46,10 @@ public actor WorkspaceCodeIndex {
                 let source = String(data: data, encoding: .utf8)
             else { continue }
             bytes += data.count
+            if isManifest {
+                vocabulary += ManifestVocabulary.parse(source, file: name)
+            }
+            guard isCode else { continue }
             let digest = SHA256.hash(data: data)
             let symbols: [CodeSymbol]
             if let previous = cached[name], previous.digest == digest {
@@ -57,7 +64,19 @@ public actor WorkspaceCodeIndex {
             }
         }
         cached = retained
-        return CodeWorkspaceContext(symbols: result, files: files)
+        let projectName = rootURL.lastPathComponent
+        if (3...64).contains(projectName.count),
+            projectName.range(of: #"^[A-Za-z][A-Za-z0-9_.+-]*$"#, options: .regularExpression) != nil {
+            vocabulary.insert(WorkspaceVocabularyTerm(text: projectName, source: "repository"), at: 0)
+        }
+        var seenVocabulary: Set<String> = []
+        let uniqueVocabulary = vocabulary.filter {
+            seenVocabulary.insert($0.text.lowercased()).inserted
+        }
+        return CodeWorkspaceContext(
+            symbols: result,
+            files: files,
+            vocabulary: Array(uniqueVocabulary.prefix(128)))
     }
 
     /// Anchor every path component to an open directory descriptor. Concurrent

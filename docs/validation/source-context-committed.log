@@ -1,0 +1,47 @@
+PASS rc=0 duration=83.53s captured=52032 bytes
+Test Case '-[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/TestHelpers.swift:8: -[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty] : Test skipped - Model integration tests disabled; set PLYNN_RUN_MODEL_TESTS=1 to run them
+Test Case '-[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty]' skipped (0.000 seconds).
+Test Case '-[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/TestHelpers.swift:8: -[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture] : Test skipped - Model integration tests disabled; set PLYNN_RUN_MODEL_TESTS=1 to run them
+Test Case '-[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture]' skipped (0.000 seconds).
+Test Suite 'TranscriberTests' passed at 2026-09-12 18:33:26.221.
+	 Executed 3 tests, with 3 tests skipped and 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'TransformPromptTests' started at 2026-09-12 18:33:26.221.
+Test Case '-[PlynnKitTests.TransformPromptTests testPromptCarriesTextAndInstruction]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testPromptCarriesTextAndInstruction]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.TransformPromptTests testRunawayGuardScalesWithSelection]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testRunawayGuardScalesWithSelection]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.TransformPromptTests testSanitizeSharedGuards]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testSanitizeSharedGuards]' passed (0.000 seconds).
+Test Suite 'TransformPromptTests' passed at 2026-09-12 18:33:26.222.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'PlynnPackageTests.xctest' passed at 2026-09-12 18:33:26.222.
+	 Executed 187 tests, with 10 tests skipped and 0 failures (0 unexpected) in 72.959 (72.983) seconds
+Test Suite 'All tests' passed at 2026-09-12 18:33:26.222.
+	 Executed 187 tests, with 10 tests skipped and 0 failures (0 unexpected) in 72.959 (72.985) seconds
+code-context validation engine: Qwen3-4B (local)
+CODE_CONTEXT_MODEL {"ambiguous_prose_output":"Get user feedback tomorrow","coding_output":"Call getQuokkaTelemetry after startup","engine":"Qwen3-4B (local)","prose_output":"Buy groceries tomorrow"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext","CodexDesktopWorkspace"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update this drug holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct that captures context at the hot boundary","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":1}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodeContextProbeTests","test_coding_terms_split_without_losing_acronyms","test_repo_boundary_ignores_secrets_builds_and_symlinks"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"input":"Open the file that defines the context captured at the hot boundary.","output":"Open @Sources\/PlynnKit\/ContextSnapshot.swift.","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":1}"}
+SOURCE_COUNTERFACTUAL output=Update RecordingEnvelope response={"symbol":"struct RecordingEnvelope","evidence":1}
+SOURCE_AMBIGUOUS Update the struct holding dictation context
+SOURCE_UNTRUSTED_COMMENT Update ContextSnapshot
+CODE_CONTEXT_WORKSPACE symbols=5593 hints=2 elapsed=0.639954042 seconds
+cold-start=0.05020025 seconds warm-start=0.004706334 seconds
+fn-release-to-paste=0.048239167 seconds
+launch-to-ready=0.050493167 seconds
+SPOKEN_TRIAL {"asr_seconds":1.261275053024292,"audio_seconds":2.2804375000000001,"case":"filename","engine_start_seconds":0.58416199684143066,"format_seconds":2.5378129482269287,"output":"Open @ContextSnapshot.swift","raw_asr":"Open context snapshot.swift","retrieved_files":[],"status":"passed","utterance":"Open context snapshot dot swift"}
+SPOKEN_TRIAL {"asr_seconds":2.0028259754180908,"audio_seconds":2.9203125000000001,"case":"symbols","engine_start_seconds":0.00015199184417724609,"format_seconds":3.0436689853668213,"output":"Update ContextSnapshot and preferredSpellings","raw_asr":"Update context snapshot and preferred spellings","retrieved_files":[],"status":"passed","utterance":"Update context snapshot and preferred spellings"}
+SPOKEN_TRIAL {"asr_seconds":1.5327759981155396,"audio_seconds":1.6060000000000001,"case":"prose","engine_start_seconds":9.7990036010742188e-05,"format_seconds":0.16169798374176025,"output":"Get user feedback tomorrow","raw_asr":"Get user feedback tomorrow","retrieved_files":[],"status":"passed","utterance":"Get user feedback tomorrow"}
+SPOKEN_TRIAL {"asr_seconds":1.72918701171875,"audio_seconds":3.2686250000000001,"case":"description","engine_start_seconds":4.3034553527832031e-05,"format_seconds":5.1016180515289307,"output":"Update ContextSnapshot","raw_asr":"Update the struct that captures context at the hot boundary","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct that captures context at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":1.8293100595474243,"audio_seconds":3.7201249999999999,"case":"file-description","engine_start_seconds":8.4996223449707031e-05,"format_seconds":4.6306120157241821,"output":"Open @Sources\/PlynnKit\/ContextSnapshot.swift.","raw_asr":"Open the file that defines the context captured at the hot boundary.","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"status":"passed","utterance":"Open the file that defines the context captured at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":0.92376697063446045,"audio_seconds":2.7113749999999999,"case":"paraphrase","engine_start_seconds":3.6001205444335938e-05,"format_seconds":4.4953440427780151,"output":"Update ContextSnapshot","raw_asr":"Update this drug holding dictation context","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct holding dictation context"}
+SPOKEN_TRIAL {"asr_seconds":0.69368791580200195,"audio_seconds":1.1323749999999999,"case":"generic","engine_start_seconds":3.3020973205566406e-05,"format_seconds":0.14708709716796875,"output":"Update the struct","raw_asr":"Update the struct","retrieved_files":[],"status":"passed","utterance":"Update the struct"}
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+... output capped at 20000 bytes ...

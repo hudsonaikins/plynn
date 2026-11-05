@@ -1,0 +1,26 @@
+PASS rc=0 duration=85.40s captured=52036 bytes
+code-context validation engine: Qwen3-4B (local)
+CODE_CONTEXT_MODEL {"ambiguous_prose_output":"Get user feedback tomorrow","coding_output":"Call getQuokkaTelemetry after startup","engine":"Qwen3-4B (local)","prose_output":"Buy groceries tomorrow"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext","CodexDesktopWorkspace"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update this drug holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct that captures context at the hot boundary","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":1}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodeContextProbeTests","test_coding_terms_split_without_losing_acronyms","test_repo_boundary_ignores_secrets_builds_and_symlinks"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"input":"Open the file that defines the context captured at the hot boundary.","output":"Open @Sources\/PlynnKit\/ContextSnapshot.swift.","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":1}"}
+SOURCE_COUNTERFACTUAL output=Update RecordingEnvelope response={"symbol":"struct RecordingEnvelope","evidence":1}
+SOURCE_AMBIGUOUS Update the struct holding dictation context
+SOURCE_UNTRUSTED_COMMENT Update ContextSnapshot
+CODE_CONTEXT_WORKSPACE symbols=4613 hints=2 elapsed=0.807710917 seconds
+cold-start=0.113907417 seconds warm-start=0.004201458 seconds
+fn-release-to-paste=0.0490505 seconds
+launch-to-ready=0.048137833 seconds
+SPOKEN_TRIAL {"asr_seconds":0.76876091957092285,"audio_seconds":2.2804375000000001,"case":"filename","engine_start_seconds":1.0556889772415161,"format_seconds":1.8881430625915527,"output":"Open @ContextSnapshot.swift","raw_asr":"Open context snapshot.swift","retrieved_files":[],"status":"passed","utterance":"Open context snapshot dot swift"}
+SPOKEN_TRIAL {"asr_seconds":0.60399508476257324,"audio_seconds":2.9203125000000001,"case":"symbols","engine_start_seconds":4.6968460083007812e-05,"format_seconds":1.6898019313812256,"output":"Update ContextSnapshot and preferredSpellings","raw_asr":"Update context snapshot and preferred spellings","retrieved_files":[],"status":"passed","utterance":"Update context snapshot and preferred spellings"}
+SPOKEN_TRIAL {"asr_seconds":0.48874509334564209,"audio_seconds":1.6060000000000001,"case":"prose","engine_start_seconds":6.0915946960449219e-05,"format_seconds":0.10146093368530273,"output":"Get user feedback tomorrow","raw_asr":"Get user feedback tomorrow","retrieved_files":[],"status":"passed","utterance":"Get user feedback tomorrow"}
+SPOKEN_TRIAL {"asr_seconds":0.90817999839782715,"audio_seconds":3.2686250000000001,"case":"description","engine_start_seconds":3.5047531127929688e-05,"format_seconds":3.4378149509429932,"output":"Update ContextSnapshot","raw_asr":"Update the struct that captures context at the hot boundary","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct that captures context at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":1.9273279905319214,"audio_seconds":3.7201249999999999,"case":"file-description","engine_start_seconds":9.2029571533203125e-05,"format_seconds":3.7975879907608032,"output":"Open @Sources\/PlynnKit\/ContextSnapshot.swift.","raw_asr":"Open the file that defines the context captured at the hot boundary.","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"status":"passed","utterance":"Open the file that defines the context captured at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":0.65515792369842529,"audio_seconds":2.7113749999999999,"case":"paraphrase","engine_start_seconds":3.910064697265625e-05,"format_seconds":4.2476580142974854,"output":"Update ContextSnapshot","raw_asr":"Update this drug holding dictation context","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct holding dictation context"}
+SPOKEN_TRIAL {"asr_seconds":0.98575294017791748,"audio_seconds":1.1323749999999999,"case":"generic","engine_start_seconds":8.6069107055664062e-05,"format_seconds":0.11132204532623291,"output":"Update the struct","raw_asr":"Update the struct","retrieved_files":[],"status":"passed","utterance":"Update the struct"}
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+... output capped at 20000 bytes ...

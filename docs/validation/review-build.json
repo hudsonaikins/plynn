@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-09-12T21:20:05.358206+00:00",
+  "source_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81",
+  "app": "/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/build/PlynnReview.app",
+  "bundle_identifier": "co.charmtechnologies.plynn.source-review",
+  "binary_sha256": "c49bb3ddae33bb89026353e48785b18dc72a6b3415e7864db63682e774c3507b",
+  "signature": "Ad-hoc development signature; hardened runtime disabled only in review bundle to load bundled Sparkle. Strict signature verification passed.",
+  "installed_app_preserved": "/Applications/Plynn.app",
+  "workspace": "/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext",
+  "code_vocabulary_enabled": true,
+  "correction_learning_enabled": false,
+  "real_dictation_validation": "pending user speech and macOS permissions",
+  "trial_cases": [
+    {
+      "say": "open context snapshot dot swift",
+      "expect": "@ContextSnapshot.swift"
+    },
+    {
+      "say": "update context snapshot and preferred spellings",
+      "expect": [
+        "ContextSnapshot",
+        "preferredSpellings"
+      ]
+    },
+    {
+      "say": "get user feedback tomorrow",
+      "expect": "ordinary prose, no forced getUser identifier"
+    }
+  ],
+  "rollback": "Quit Plynn Review, then open /Applications/Plynn.app.",
+  "launch_history": [
+    "Initial hardened ad-hoc build rejected Sparkle at load time.",
+    "Re-signed development review bundle and relaunched."
+  ],
+  "review_process_running": true
+}

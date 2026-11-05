@@ -12,7 +12,7 @@ public struct FormatResult: Equatable, Sendable {
 /// pasteable; LLM problems degrade to the deterministic output.
 public actor TranscriptFormatter {
     private let appleFM = AppleFMFormatter()
-    private let llm = LLMFormatter()  // fallback when Apple Intelligence is off
+    private let granite = GraniteFormatter()
     /// Reloaded per call so Settings edits apply immediately.
     private let personalization: @Sendable () -> (
         snippets: [PersonalStore.Snippet], terms: [PersonalStore.Term]
@@ -30,8 +30,7 @@ public actor TranscriptFormatter {
     public var polishEngine: String? {
         get async {
             if appleFM.ready { return "Apple Intelligence" }
-            if await llm.ready { return "Qwen3-4B (local)" }
-            return nil
+            return await granite.available() ? "Granite 3.3 2B (local MLX)" : nil
         }
     }
 
@@ -40,38 +39,24 @@ public actor TranscriptFormatter {
         appleFM.ready ? nil : appleFM.availabilityDescription
     }
 
-    /// Raw completion on whichever polish engine is live — the summarizer's
-    /// backend. Nil when no engine is available.
+    /// On-device completion for source resolution and summarization.
     public func complete(_ prompt: String) async -> String? {
         if appleFM.ready { return await appleFM.complete(prompt) }
-        if await llm.ready { return await llm.complete(prompt) }
-        return nil
+        return await granite.complete(prompt)
     }
 
     /// Command mode: apply a spoken instruction to selected text.
     /// Nil = no engine or the transform failed — caller must touch nothing.
     public func transform(selection: String, instruction: String) async -> String? {
         let prompt = TransformPrompt.build(selectedText: selection, instruction: instruction)
-        let raw: String?
-        if appleFM.ready {
-            raw = await appleFM.complete(prompt)
-        } else if await llm.ready {
-            raw = await llm.complete(prompt)
-        } else {
-            return nil
-        }
+        let raw = await complete(prompt)
         let out = PolishPrompt.sanitize(raw, input: selection)
         return out == selection ? nil : out
     }
 
-    /// Warm the polish path: Apple's on-device model when available,
-    /// otherwise the bundled-model fallback (downloads on first use).
-    public func warmLLM() async {
-        if appleFM.ready {
-            await appleFM.warm()
-        } else {
-            try? await llm.ensureLoaded()
-        }
+    /// Prewarm Apple's on-device model when it is available.
+    public func warmAppleFM() async {
+        await appleFM.warm()
     }
 
     public func format(
@@ -122,8 +107,8 @@ public actor TranscriptFormatter {
                 text = await appleFM.format(
                     text, tone: profile.tone, technical: profile.isTechnical,
                     preferredSpellings: spellings)
-            } else if await llm.ready {
-                text = await llm.format(
+            } else {
+                text = await granite.format(
                     text, tone: profile.tone, technical: profile.isTechnical,
                     preferredSpellings: spellings)
             }

@@ -149,8 +149,8 @@ public enum MeetingSummarizer {
         """
     }
 
-    /// Runs the chunk → merge pipeline against a completion function
-    /// (`AppleFMFormatter.complete` or `LLMFormatter.complete`). Returns nil
+    /// Runs the chunk → merge pipeline against Apple Intelligence completion.
+    /// Returns nil
     /// if any step yields nothing usable.
     public static func summarize(
         _ transcript: MeetingTranscript, title: String,

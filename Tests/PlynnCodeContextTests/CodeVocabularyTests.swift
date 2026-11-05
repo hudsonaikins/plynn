@@ -50,6 +50,26 @@ final class CodeVocabularyTests: XCTestCase {
         print("CODE_CONTEXT_WORKSPACE symbols=\(symbols.count) hints=\(hints.count) elapsed=\(duration)")
     }
 
+    func testRepositoryNameVocabularyFollowsActiveRoot() async throws {
+        let base = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: base) }
+        for name in ["herdr", "another-project"] {
+            let root = base.appendingPathComponent(name)
+            try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+            let git = Process()
+            git.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+            git.arguments = ["init", "-q", root.path]
+            try git.run(); git.waitUntilExit()
+            XCTAssertEqual(git.terminationStatus, 0)
+        }
+        let index = WorkspaceCodeIndex()
+        let herdr = await index.snapshot(at: base.appendingPathComponent("herdr").path)
+        XCTAssertEqual(herdr.vocabulary.first?.text, "herdr")
+        let other = await index.snapshot(at: base.appendingPathComponent("another-project").path)
+        XCTAssertEqual(other.vocabulary.first?.text, "another-project")
+        XCTAssertFalse(other.vocabulary.contains { $0.text == "herdr" })
+    }
+
     func testWorkspaceRefreshIgnoresSecretsSymlinksAndDeletedFiles() async throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
             .resolvingSymlinksInPath()

@@ -1,0 +1,99 @@
+{
+  "schema": "plynn-code-context-research/v1",
+  "date": "2026-09-12",
+  "objective": "Source-aware coding dictation: understand repository vocabulary, filenames, identifiers, and relevant code relationships while preserving spoken intent.",
+  "stage": "native source-vocabulary enhancement committed and locally validated",
+  "base_commit": "aab72b0d597879972c5ba0c21956bd4e89dc8f9c",
+  "branch": "codex/source-aware-dictation",
+  "sources": [
+    {
+      "name": "SwiftTreeSitter",
+      "url": "https://github.com/tree-sitter/swift-tree-sitter",
+      "finding": "Swift wrapper for native incremental parsing, language grammars packaged separately. BSD-3-Clause per GitHub metadata. Recommended runtime foundation."
+    },
+    {
+      "name": "Swift grammar",
+      "url": "https://github.com/alex-pinkus/tree-sitter-swift/blob/main/Package.swift",
+      "finding": "Swift Package exposes TreeSitterSwift C parser."
+    },
+    {
+      "name": "TypeScript grammar",
+      "url": "https://github.com/tree-sitter/tree-sitter-typescript/blob/master/Package.swift",
+      "finding": "Swift Package exposes TypeScript and TSX parsers; manifest still references legacy ChimeHQ wrapper URL. Resolve package identity/version compatibility before integration."
+    },
+    {
+      "name": "Python grammar",
+      "url": "https://github.com/tree-sitter/tree-sitter-python/blob/master/Package.swift",
+      "finding": "Swift Package exists and references current SwiftTreeSitter URL."
+    },
+    {
+      "name": "Graphify",
+      "url": "https://github.com/Graphify-Labs/graphify",
+      "finding": "Installed graphifyy 0.9.32 metadata identifies Apache-2.0 and this repository; GitHub returned 404 during research. Installed extract_swift API tested locally. Do not depend on remote availability or vendor unreviewed updates."
+    },
+    {
+      "name": "Graphify distribution recipe",
+      "url": "https://github.com/conda-forge/graphifyy-feedstock/blob/main/recipe/recipe.yaml",
+      "finding": "Current recipe lists Python runtime, NetworkX, Tree-sitter and language grammar dependencies. Useful sidecar; unnecessary runtime burden for native app vocabulary extraction."
+    },
+    {
+      "name": "FluidAudio custom vocabulary",
+      "url": "https://github.com/FluidInference/FluidAudio/blob/main/Documentation/ASR/CustomVocabulary.md",
+      "finding": "CTC word spotting uses acoustic evidence for vocabulary terms; model-specific integration required. Documentation accuracy/speed figures are upstream claims, not Plynn validation."
+    },
+    {
+      "name": "Universal Ctags",
+      "url": "https://github.com/universal-ctags/ctags",
+      "finding": "Multi-language tag extraction alternative; additional binary distribution and GPL licensing considerations. macOS /usr/bin/ctags presence does not establish Universal Ctags availability."
+    },
+    {
+      "name": "Language Server Protocol",
+      "url": "https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/",
+      "finding": "workspace/symbol supplies symbols when supported by a language server. Requires an editor/server integration; does not establish public access to Codex Desktop active workspace."
+    }
+  ],
+  "recommendation": {
+    "runtime": "Use native SwiftTreeSitter with Swift, TypeScript/TSX, JavaScript and Python grammars. Parse selected workspace in background, cache by content digest, and snapshot context at recording start.",
+    "graph": "Optionally consume validated existing Graphify graph for ranking; require source path/location freshness and distinguish extracted from inferred relationships. Never launch graph/model construction in dictation path.",
+    "model": "Retrieve bounded relevant symbols and declaration context; treat repository material as untrusted data, preserve original intent, and abstain from ambiguous automatic rewrites. Feed both local polish engines through shared prompt contract.",
+    "recognition": "After grounded text-context behavior works, evaluate per-session vocabulary boosting against actual supported ASR engines and recorded audio. Text retrieval alone is not recognition-quality proof.",
+    "workspace": "Reuse explicit Codex Desktop folder selection; never imply automatic active-file discovery without a real integration."
+  },
+  "direct_verification": {
+    "tests": {
+      "status": "passed",
+      "count": 5,
+      "command": "PYTHONDONTWRITEBYTECODE=1 /Users/hudson/.local/share/uv/tools/graphifyy/bin/python3 -m unittest discover -s scripts -p test_code_context_probe.py -v"
+    },
+    "probe": {
+      "status": "passed",
+      "files": 68,
+      "elapsed_ms": 285.7,
+      "errors": [],
+      "evidence": "code-context-probe.json",
+      "qualification": "One offline run on this checkout, not an end-to-end latency benchmark or ASR accuracy measurement."
+    },
+    "code_digests": {
+      "scripts/code_context_probe.py": "bdc18aab62a7e42325ba8672ba413b4ddd38d889cc9a005ae112aff66fac985c",
+      "scripts/test_code_context_probe.py": "f56a5c8d456236e2ef16ede6177b806216946d1c0cd6fe08cdae837789776cb0"
+    }
+  },
+  "remaining_required_work": [],
+  "authority": "Local development and experiments only. No commit, push, app replacement, model download, paid request, deployment or merge performed.",
+  "baseline_findings": [
+    "At the upstream baseline, Plynn formatting carried filenames and dictionary spellings, not source-derived vocabulary.",
+    "Graphify query against old checkout failed because graphify-out/graph.json was absent.",
+    "Graphify per-file Swift extraction yields declarations/imports/references with locations, without a model call.",
+    "Unresolved Graphify node IDs can collide across files. Prototype namespaces IDs by source file; cross-file relationships are not inferred.",
+    "Graphify entity nodes alone omit argument labels. Direct Tree-sitter identifiers recover preferredSpellings from actual call sites.",
+    "Prototype preserves duplicate candidates and only uses explicitly provided active file for ranking.",
+    "Source index ignores Git-ignored/untracked excluded sources, hidden paths, selected build folders, symlinks, and files over 256000 bytes. Maximum 500 parsed files. Only structured identifiers and relations leave extractor."
+  ],
+  "native_result": "../validation/code-context-review.json",
+  "candidate_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81",
+  "follow_up_options": [
+    "Audio recognition benchmarks and decoder-level vocabulary boosting.",
+    "Automatic editor/workspace integration where public APIs exist.",
+    "Graphify-assisted relationship ranking beyond source spelling hints."
+  ]
+}

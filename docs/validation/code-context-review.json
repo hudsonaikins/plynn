@@ -1,0 +1,88 @@
+{
+  "schema": "plynn-code-context-validation/v1",
+  "recorded_at": "2026-09-12T20:28:52.433004+00:00",
+  "objective": "Add repository-derived coding vocabulary and investigate source-awareness methods, including Graphify.",
+  "base_commit": "aab72b0d597879972c5ba0c21956bd4e89dc8f9c",
+  "branch": "codex/source-aware-dictation",
+  "candidate_kind": "committed source",
+  "source_sha256": {
+    "Package.resolved": "2f62817a553803c4b5dfc097df324fbff67193ebde1d21fbb37e88299d4987af",
+    "Package.swift": "8a35d408afe250b504322d7f954e984dc0ea968c25fa23be2d80b78b843ddae3",
+    "README.md": "188253de99b19d922b36017493cfe4a03ca50edfaba25e71f001fc3f6b9e7218",
+    "Sources/Plynn/SettingsWindow.swift": "0177992772c7bc8e29491ff32a2dc0622bb0896fb08527f120cc5633986c4344",
+    "Sources/Plynn/main.swift": "5d78159665809a6302607314a344eb3583156c8d4c2f6c19337e2c7e1d04354d",
+    "Sources/PlynnCodeContext/CodeVocabulary.swift": "4acfa532e199a91425eedc9aadcd2c0fdea1a17e36d2e0768a137e40d154e91e",
+    "Sources/PlynnCodeContext/WorkspaceCodeIndex.swift": "16b4fd298f5ad6a33dfee04977ca36a479371fb406b31574e9e3c264f915ae7e",
+    "Sources/PlynnKit/AppCategories.swift": "b92995f98f0e8735814e23d3f76572bb40c8ecb4503ff5b8d2736097893cee6f",
+    "Sources/PlynnKit/CodexCLIContext.swift": "de8930ea81b02257d84a531f60106130feb5e3dcc7376c485b37bba86bfc52e8",
+    "Sources/PlynnKit/ContextSnapshot.swift": "09c363f219a65857cd80959fc40200f6f2ae5c570f15cf2180bf114e0e662a67",
+    "Sources/PlynnKit/PolishPrompt.swift": "f055c28c797981f78c0a2a237fb3d88819a9d3b6f8e0d386795f6646756947c0",
+    "Sources/PlynnKit/TranscriptFormatter.swift": "e1de851f4a1b4d88e2063d8571d1de6fd357571cba004c69eaa6d4b5e21e37e9",
+    "Tests/PlynnCodeContextTests/CodeVocabularyTests.swift": "eb0ceeafe8e2e38290c581627d962c5f57b63fb588ea3a7a06ebe6b8c6abbeaf",
+    "Tests/PlynnKitTests/AppCategoriesTests.swift": "063b2be2dff5d0afc1a5399d6c2516e950bf0525411a90a76629fe6c96aab787",
+    "Tests/PlynnKitTests/CodeContextFormattingTests.swift": "0a730a86db83049714834f641a52b84efb52c34ecec553102bd2c77b9668efee",
+    "Tests/PlynnKitTests/ReferenceResolverTests.swift": "3b38d87469323849c258408f33527e7acb1921628e313c0a3edd8247ee10792a",
+    "scripts/code_context_probe.py": "bdc18aab62a7e42325ba8672ba413b4ddd38d889cc9a005ae112aff66fac985c",
+    "scripts/test_code_context_probe.py": "f56a5c8d456236e2ef16ede6177b806216946d1c0cd6fe08cdae837789776cb0"
+  },
+  "decision": "passed",
+  "blocking_gate": null,
+  "implemented": [
+    "Explicit Codex Desktop workspace picker carried forward from previous user-owned worktree.",
+    "Opt-in native Swift/JavaScript/TypeScript/TSX/Python syntax index; bounded and cached by file content digest.",
+    "Git ignore rules, hidden/build-directory exclusions, descriptor-anchored symlink protection, bounded regular-file reads.",
+    "Source vocabulary captured per dictation and routed through existing dictionary and shared local polish prompt.",
+    "Ambiguous spellings abstain; explicit dictionary wins; filename tagging precedes code correction.",
+    "Ordinary phrases are not forced into code spellings without code-action cues; model prompt distinguishes prose from references."
+  ],
+  "checks": [
+    {
+      "name": "committed build and full regression suite",
+      "status": "passed",
+      "tests": 178,
+      "failures": 0,
+      "skipped": 10,
+      "evidence": "code-context-committed.log",
+      "candidate_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81"
+    },
+    {
+      "name": "local-model coding and ordinary-prose semantics",
+      "status": "passed",
+      "outputs": {
+        "ambiguous_prose_output": "Get user feedback tomorrow",
+        "coding_output": "Call getQuokkaTelemetry after startup",
+        "engine": "Qwen3-4B (local)",
+        "prose_output": "Buy groceries tomorrow"
+      },
+      "evidence": "code-context-committed.log"
+    },
+    {
+      "name": "selected-workspace index and retrieval",
+      "status": "passed",
+      "measurement": "CODE_CONTEXT_WORKSPACE symbols=5181 hints=2 elapsed=0.684257083 seconds",
+      "evidence": "code-context-committed.log"
+    },
+    {
+      "name": "source matches reviewed and committed candidate",
+      "status": "passed",
+      "candidate_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81"
+    }
+  ],
+  "paid_model_api_calls": 0,
+  "limitations": [
+    "Source identifier awareness, not whole-program semantic understanding or automatic active-editor discovery.",
+    "Graphify evaluated with an offline prototype; no Python/Graphify runtime dependency added to app.",
+    "Apple Intelligence unavailable on this machine; actual local inference checked through Qwen fallback.",
+    "No audio-recognition accuracy benchmark, decoder-level vocabulary boosting, or rendered Settings interaction validation claimed.",
+    "Installed app untouched; local commit only; no push, PR publication, merge, or release performed.",
+    "Code indexing bounded to 500 files, 256000 bytes per file, 8000000 bytes total and a 600ms parsing window; unsupported/omitted files retain existing behavior."
+  ],
+  "next_step": "Local development and committed validation complete. Publication or installation requires separate authorization.",
+  "candidate_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81",
+  "validation_scope": "Local source-vocabulary enhancement. No installation, publication, audio-accuracy benchmark, or whole-program semantic understanding claim.",
+  "metal_resource": {
+    "source": "build/DerivedData/Build/Products/Debug/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib",
+    "test_location": ".build/arm64-apple-macosx/debug/PlynnPackageTests.xctest/Contents/MacOS/mlx.metallib",
+    "sha256": "8c116a0ac9dca5382cdd8da91d9ac4f88d73f69891d4c4a48b2a9b0fbefb1dd0"
+  }
+}

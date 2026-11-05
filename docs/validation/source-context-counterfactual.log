@@ -1,0 +1,38 @@
+FAIL rc=1 duration=31.99s captured=4718 bytes
+Test Suite 'Selected tests' started at 2026-09-12 18:11:32.302.
+Test Suite 'PlynnPackageTests.xctest' started at 2026-09-12 18:11:32.303.
+Test Suite 'CodeReferenceResolverTests' started at 2026-09-12 18:11:32.303.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testDuplicatedEvidenceAndWrongKindsAbstain]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testDuplicatedEvidenceAndWrongKindsAbstain]' passed (0.006 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:98: error: -[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution] : XCTAssertEqual failed: ("Update the struct holding dictation context") is not equal to ("Update RecordingEnvelope")
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution]' failed (21.921 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' passed (0.170 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' passed (0.002 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testTaggedRelativePathIsNotTaggedAgain]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testTaggedRelativePathIsNotTaggedAgain]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' passed (0.226 seconds).
+Test Suite 'CodeReferenceResolverTests' failed at 2026-09-12 18:11:54.631.
+	 Executed 8 tests, with 1 failure (0 unexpected) in 22.327 (22.328) seconds
+Test Suite 'PlynnPackageTests.xctest' failed at 2026-09-12 18:11:54.632.
+	 Executed 8 tests, with 1 failure (0 unexpected) in 22.327 (22.328) seconds
+Test Suite 'Selected tests' failed at 2026-09-12 18:11:54.632.
+	 Executed 8 tests, with 1 failure (0 unexpected) in 22.327 (22.329) seconds
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext","CodexDesktopWorkspace"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update this drug holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct that captures context at the hot boundary","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodeContextProbeTests","test_coding_terms_split_without_losing_acronyms","test_repo_boundary_ignores_secrets_builds_and_symlinks"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"input":"Open the file that defines the context captured at the hot boundary.","output":"Open @Sources\/PlynnKit\/ContextSnapshot.swift.","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":3}"}
+SOURCE_COUNTERFACTUAL output=Update the struct holding dictation context response={"symbol":"struct RecordingEnvelope","evidence":1}
+SOURCE_AMBIGUOUS Update the struct holding dictation context
+SOURCE_UNTRUSTED_COMMENT Update the struct holding dictation context
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

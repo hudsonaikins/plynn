@@ -11,6 +11,29 @@ public enum CodexDesktopWorkspace {
     public static let bundleID = "com.openai.codex"
     public static let defaultsKey = "codexDesktopWorkspace"
 
+    /// Codex Desktop's local selection is read at dictation start, not cached across projects.
+    /// A remote selection has no readable source tree on this Mac.
+    public static func activeRoot(
+        stateURL: URL = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".codex/.codex-global-state.json")
+    ) -> String? {
+        guard let data = try? Data(contentsOf: stateURL),
+            let state = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else { return configuredRoot }
+
+        guard let selected = state["selected-project"] as? [String: String] else { return nil }
+        guard selected["type"] == "local",
+            let id = selected["projectId"],
+            let projects = state["local-projects"] as? [String: [String: Any]],
+            let roots = projects[id]?["rootPaths"] as? [String],
+            roots.count == 1
+        else { return nil }
+        let root = URL(fileURLWithPath: roots[0]).standardizedFileURL.path
+        // Do not index a parent folder of unrelated projects or Codex's private files.
+        guard FileManager.default.fileExists(atPath: root + "/.git") else { return nil }
+        return root
+    }
+
     public static var configuredRoot: String? {
         let raw = UserDefaults.standard.string(forKey: defaultsKey)?
             .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""

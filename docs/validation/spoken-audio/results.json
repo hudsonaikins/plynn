@@ -1,0 +1,109 @@
+{
+  "asr_engine": "Parakeet (local)",
+  "base_commit": "6588034870ecc377b6eb96bd05d8bed8fea2af81",
+  "candidate": "Committed candidate; see candidate.json for source and binary digests",
+  "external_api_cost": 0,
+  "personalization": "empty test store",
+  "polish_engine": "Qwen3-4B (local)",
+  "scope": "Samantha synthesized speech, streaming ASR and formatter; no microphone, hotkey or paste validation",
+  "status": "passed",
+  "symbol_count": 5593,
+  "trials": [
+    {
+      "asr_seconds": 1.261275053024292,
+      "audio_seconds": 2.2804375,
+      "case": "filename",
+      "engine_start_seconds": 0.5841619968414307,
+      "format_seconds": 2.5378129482269287,
+      "output": "Open @ContextSnapshot.swift",
+      "raw_asr": "Open context snapshot.swift",
+      "retrieved_files": [],
+      "status": "passed",
+      "utterance": "Open context snapshot dot swift"
+    },
+    {
+      "asr_seconds": 2.002825975418091,
+      "audio_seconds": 2.9203125,
+      "case": "symbols",
+      "engine_start_seconds": 0.0001519918441772461,
+      "format_seconds": 3.0436689853668213,
+      "output": "Update ContextSnapshot and preferredSpellings",
+      "raw_asr": "Update context snapshot and preferred spellings",
+      "retrieved_files": [],
+      "status": "passed",
+      "utterance": "Update context snapshot and preferred spellings"
+    },
+    {
+      "asr_seconds": 1.5327759981155396,
+      "audio_seconds": 1.606,
+      "case": "prose",
+      "engine_start_seconds": 9.799003601074219e-05,
+      "format_seconds": 0.16169798374176025,
+      "output": "Get user feedback tomorrow",
+      "raw_asr": "Get user feedback tomorrow",
+      "retrieved_files": [],
+      "status": "passed",
+      "utterance": "Get user feedback tomorrow"
+    },
+    {
+      "asr_seconds": 1.72918701171875,
+      "audio_seconds": 3.268625,
+      "case": "description",
+      "engine_start_seconds": 4.303455352783203e-05,
+      "format_seconds": 5.101618051528931,
+      "output": "Update ContextSnapshot",
+      "raw_asr": "Update the struct that captures context at the hot boundary",
+      "retrieved_files": [
+        "Sources/PlynnKit/ContextSnapshot.swift",
+        "Sources/PlynnKit/CodexCLIContext.swift"
+      ],
+      "status": "passed",
+      "utterance": "Update the struct that captures context at the hotkey boundary"
+    },
+    {
+      "asr_seconds": 1.8293100595474243,
+      "audio_seconds": 3.720125,
+      "case": "file-description",
+      "engine_start_seconds": 8.499622344970703e-05,
+      "format_seconds": 4.630612015724182,
+      "output": "Open @Sources/PlynnKit/ContextSnapshot.swift.",
+      "raw_asr": "Open the file that defines the context captured at the hot boundary.",
+      "retrieved_files": [
+        "Sources/PlynnKit/ContextSnapshot.swift",
+        "scripts/test_code_context_probe.py"
+      ],
+      "status": "passed",
+      "utterance": "Open the file that defines the context captured at the hotkey boundary"
+    },
+    {
+      "asr_seconds": 0.9237669706344604,
+      "audio_seconds": 2.711375,
+      "case": "paraphrase",
+      "engine_start_seconds": 3.600120544433594e-05,
+      "format_seconds": 4.495344042778015,
+      "output": "Update ContextSnapshot",
+      "raw_asr": "Update this drug holding dictation context",
+      "retrieved_files": [
+        "Sources/PlynnKit/ContextSnapshot.swift",
+        "Sources/PlynnKit/CodexCLIContext.swift"
+      ],
+      "status": "passed",
+      "utterance": "Update the struct holding dictation context"
+    },
+    {
+      "asr_seconds": 0.693687915802002,
+      "audio_seconds": 1.132375,
+      "case": "generic",
+      "engine_start_seconds": 3.3020973205566406e-05,
+      "format_seconds": 0.14708709716796875,
+      "output": "Update the struct",
+      "raw_asr": "Update the struct",
+      "retrieved_files": [],
+      "status": "passed",
+      "utterance": "Update the struct"
+    }
+  ],
+  "voice": "Samantha",
+  "words_per_minute": 160,
+  "source_commit": "c61aa778ae4efe6df16d42d3ad9f6ab7d73f3497"
+}

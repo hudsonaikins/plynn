@@ -5,8 +5,9 @@ import ApplicationServices
 /// what the user's correction pass did to a paste. Local-only; secure fields
 /// are never read.
 public enum FieldReader {
-    private static let editableRoles: Set<String> = [
-        "AXTextField", "AXTextArea", "AXSearchField", "AXComboBox", "AXWebArea",
+    private static let terminalBundleIDs: Set<String> = [
+        "com.apple.Terminal", "com.googlecode.iterm2", "com.mitchellh.ghostty",
+        "dev.warp.Warp-Stable", "com.github.wez.wezterm", "io.alacritty",
     ]
 
     @MainActor
@@ -22,20 +23,36 @@ public enum FieldReader {
         return subroleRef as? String == "AXSecureTextField"
     }
 
+    static func acceptsPaste(
+        role: String?, valueIsSettable: Bool, secure: Bool, bundleID: String?
+    ) -> Bool {
+        !secure && (valueIsSettable || (role == "AXTextArea"
+            && terminalBundleIDs.contains(bundleID ?? "")))
+    }
+
     @MainActor
     public static func focusedFieldAvailable() -> Bool {
-        guard let element = focusedElement() else { return false }
+        guard let element = focusedElement() else {
+            NSLog("plynn: paste preflight: no focused accessibility element")
+            return false
+        }
         guard !isSecureField(element) else { return false }
         var roleRef: CFTypeRef?
         AXUIElementCopyAttributeValue(element, kAXRoleAttribute as CFString, &roleRef)
         let role = roleRef as? String
 
         var settable = DarwinBoolean(false)
-        if AXUIElementIsAttributeSettable(
-            element, kAXValueAttribute as CFString, &settable) == .success {
-            return settable.boolValue
+        let valueIsSettable = AXUIElementIsAttributeSettable(
+            element, kAXValueAttribute as CFString, &settable) == .success && settable.boolValue
+        // Some terminal text areas accept Cmd-V while exposing their value as read-only.
+        let bundleID = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        let available = acceptsPaste(
+            role: role, valueIsSettable: valueIsSettable, secure: false, bundleID: bundleID)
+        if !available {
+            NSLog("plynn: paste preflight: unsupported role %@ in %@",
+                  role ?? "nil", bundleID ?? "nil")
         }
-        return editableRoles.contains(role ?? "")
+        return available
     }
 
     @MainActor

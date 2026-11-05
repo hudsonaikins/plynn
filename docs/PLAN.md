@@ -64,8 +64,8 @@ Un-sandboxed (required for AX/event taps ⇒ no Mac App Store; Developer ID + no
 │    • Apple SpeechTranscriber — zero-download onboarding mode  │
 │  Formatter:                                                   │
 │    • Rules pass (instant, deterministic)                      │
-│    • LLM pass — Qwen3-4B-Instruct 4-bit via MLX (GPU)         │
-│      fallback: Apple Foundation Models (~3B, ANE, free)       │
+│    • Apple Foundation Models on device when enabled           │
+│      fallback: rules-only formatting                          │
 └───────────────────────────────────────────────────────────────┘
 ```
 
@@ -73,7 +73,7 @@ Un-sandboxed (required for AX/event taps ⇒ no Mac App Store; Developer ID + no
 
 - **Default ASR: Parakeet TDT (Unified EN / v3 multilingual) via FluidAudio.** 2.2–2.6% WER, 123x RT batch / 29x RT streaming on M4 Pro, native punctuation+caps, word timestamps, int8 ≈ 0.6 GB, and **CTC keyword boosting** for the dictionary. Streaming partials via chunked decode with context carry; optionally swap in Nemotron Streaming (cache-aware, 560 ms chunks, 2.7% WER) for smoother live text.
 - **Accuracy/multilingual escape hatch:** on release, optionally re-transcribe the full utterance with Whisper large-v3-turbo (WhisperKit, ~100 languages, best accents/noise) or Qwen3-ASR 1.7B MLX (current on-device WER leader, 1.32%). User-selectable "fast" vs "max accuracy" per-app.
-- **ANE contention rule:** ASR lives on the ANE (FluidAudio), the formatting LLM lives on the GPU (MLX). Never both on ANE — Foundation Models (ANE) is only used when ASR is idle.
+- **On-device model rule:** use Apple Foundation Models for text formatting when enabled; otherwise preserve deterministic rules output. Keep ASR and formatting behavior measurable and avoid network model APIs.
 - **Audio:** raw AUHAL unit bound to an explicit device (doesn't hijack system default), native rate → 16 kHz mono, ring buffer, RMS levels computed lock-free on the RT thread for the waveform, mid-recording device switching (AirPods), no voice processing (raw audio transcribes better). Media auto-pause via MediaRemote during dictation. Start IO only while hotkey held (no permanent orange dot).
 
 **The formatting layer (the moat)**
@@ -81,7 +81,7 @@ Un-sandboxed (required for AX/event taps ⇒ no Mac App Store; Developer ID + no
 Two tiers so the common path never waits on an LLM:
 
 1. **Rules pass (0 ms):** spoken punctuation commands ("period", "new line", "press enter"), snippet trigger expansion, dictionary replacements, casing merge with surrounding field text (mid-sentence lowercase, drop trailing period in chat apps), number/email/URL normalization.
-2. **LLM pass (~0.3–0.8 s for a typical utterance at 60–100 tok/s):** filler-word removal, **backtrack self-correction** ("coffee at 2 actually 3" → "coffee at 3"), list detection → formatted lists, tone matching per app category (Formal/Casual/Very-casual — bundle-ID → category map like Wispr's Flow Styles), light cleanup levels None/Light/Medium/High. Prompted with AX-derived context: app name, field content before cursor, selected text.
+2. **Apple Intelligence pass (when available):** filler-word removal, **backtrack self-correction** ("coffee at 2 actually 3" → "coffee at 3"), list detection → formatted lists, tone matching per app category (Formal/Casual/Very-casual — bundle-ID → category map like Wispr's Flow Styles), light cleanup levels None/Light/Medium/High. Prompted with AX-derived context: app name, field content before cursor, selected text. Otherwise, paste the deterministic rules result unchanged.
    - Always keep the verbatim transcript; show a diff on demand; "Undo AI edit" restores verbatim. This directly answers Wispr's biggest trust complaint.
    - Latency trick: the LLM pass runs on the *finalized* streaming text while the user is still releasing the key — partials give us a head start.
 
@@ -119,7 +119,7 @@ Deliberately dropped v1: teams, cross-device sync, meeting notetaker, mobile, MC
 
 **Phase 1 — Reliable core loop:** Silero VAD gating, streaming partials in the indicator panel, session state machine (PTT/hands-free/cancel/interruption window), secure-input handling, permissions onboarding with SpeechTranscriber instant-start, model download manager, menu bar + settings skeleton. *Exit: daily-drivable raw dictation that never drops or truncates an utterance.*
 
-**Phase 2 — Formatting layer:** rules pass; MLX Qwen3-4B runner in the XPC service; filler/backtrack/list/tone prompts; cleanup levels + diff + verbatim revert; per-app category map; AX context feed; head-start pipelining of partials. *Exit: output quality ≥ Wispr on your own daily use, blind-compared.*
+**Phase 2 — Formatting layer:** rules pass; Apple Foundation Models when available; filler/backtrack/list/tone prompts; cleanup levels + diff + verbatim revert; per-app category map; AX context feed; head-start pipelining of partials. *Exit: output quality ≥ Wispr on your own daily use, blind-compared.*
 
 **Phase 3 — Personalization:** dictionary UI + CTC boosting + CSV import, snippets, correction-watching auto-learn loop, history + stats (SQLite), Whisper/Qwen3-ASR max-accuracy pass option.
 

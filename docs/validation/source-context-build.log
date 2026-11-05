@@ -1,0 +1,9 @@
+PASS rc=0 duration=25.58s captured=1701 bytes
+        try? store.addSnippet(
+        ^~~~~~~~~~~~~~~~~~~~~~
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/main.swift:574:13: warning: result of 'try?' is unused
+            try? store.writeMarkdownFile(
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/main.swift:624:21: warning: result of 'try?' is unused
+                    try? store.addTerm(
+                    ^~~~~~~~~~~~~~~~~~~

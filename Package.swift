@@ -5,8 +5,7 @@ let package = Package(
     name: "Plynn",
     platforms: [.macOS("26.0")],
     dependencies: [
-        .package(url: "https://github.com/FluidInference/FluidAudio.git", from: "0.15.5"),
-        .package(url: "https://github.com/ml-explore/mlx-swift-examples.git", from: "2.29.1"),
+        .package(url: "https://github.com/FluidInference/FluidAudio.git", from: "0.15.8"),
         .package(url: "https://github.com/sparkle-project/Sparkle.git", from: "2.6.0"),
         .package(url: "https://github.com/tree-sitter/swift-tree-sitter", exact: "0.25.0"),
         .package(url: "https://github.com/alex-pinkus/tree-sitter-swift", exact: "0.7.3-with-generated-files"),
@@ -29,7 +28,6 @@ let package = Package(
             dependencies: [
                 "PlynnCodeContext",
                 .product(name: "FluidAudio", package: "FluidAudio"),
-                .product(name: "MLXLLM", package: "mlx-swift-examples"),
             ]),
         .executableTarget(
             name: "Plynn",

@@ -3,8 +3,6 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 IDENTITY="${IDENTITY:-Developer ID Application: Carlton Aikins (FY9QB79VAP)}"
 
-# MLX's Metal shaders only compile under xcodebuild — SwiftPM CLI builds ship
-# no metallib and the LLM dies at runtime (see mlx-swift README).
 xcodebuild build -scheme Plynn -configuration Release \
   -destination 'platform=macOS' \
   -derivedDataPath build/DerivedData -quiet
@@ -14,8 +12,8 @@ APP="build/Plynn.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BUILT/Plynn" "$APP/Contents/MacOS/Plynn"
-# SPM resource bundles (incl. mlx-swift_Cmlx.bundle with mlx.metallib) resolve
-# via Bundle.main.resourceURL inside an .app — they belong in Contents/Resources.
+# Swift Package Manager resource bundles resolve through Bundle.main inside
+# the app bundle, so copy them into Contents/Resources.
 for b in "$BUILT"/*.bundle; do
   cp -R "$b" "$APP/Contents/Resources/"
 done
@@ -28,8 +26,12 @@ cp scripts/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 install_name_tool -add_rpath "@executable_path/../Frameworks" "$APP/Contents/MacOS/Plynn" 2>/dev/null || true
 codesign --force --options runtime \
   --sign "$IDENTITY" "$APP/Contents/Frameworks/Sparkle.framework"
+ENTITLEMENTS=scripts/plynn.entitlements
+if [[ "$IDENTITY" == "-" ]]; then
+  ENTITLEMENTS=scripts/plynn-dev.entitlements
+fi
 codesign --force --options runtime --deep \
-  --entitlements scripts/plynn.entitlements \
+  --entitlements "$ENTITLEMENTS" \
   --sign "$IDENTITY" "$APP"
 echo "Built and signed $APP"
 

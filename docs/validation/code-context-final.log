@@ -1,0 +1,9 @@
+PASS rc=0 duration=19.63s captured=43820 bytes
+CODE_CONTEXT_WORKSPACE symbols=5181 hints=2 elapsed=0.618655541 seconds
+cold-start=0.115570625 seconds warm-start=0.002823375 seconds
+fn-release-to-paste=0.049957083 seconds
+launch-to-ready=0.071716083 seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

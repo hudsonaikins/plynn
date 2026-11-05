@@ -80,7 +80,7 @@ struct SettingsPane: View {
             }
             Section {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Workspace folder")
+                    Text("Active local repository")
                         .font(.headline)
                     Text(codexWorkspaceLabel)
                         .font(.caption)
@@ -88,7 +88,7 @@ struct SettingsPane: View {
                         .textSelection(.enabled)
                 }
                 HStack {
-                    Button("Choose Folder…") { chooseCodexWorkspace() }
+                    Button("Choose fallback folder…") { chooseCodexWorkspace() }
                     if !codexDesktopWorkspace.isEmpty {
                         Button("Clear", role: .destructive) { codexDesktopWorkspace = "" }
                     }
@@ -96,7 +96,7 @@ struct SettingsPane: View {
             } header: {
                 Text("Codex Desktop")
             } footer: {
-                Text("Choose the same repository folder opened in Codex Desktop. Plynn uses unique filenames only and tags them when Codex Desktop is focused. No terminal setup needed.")
+                Text("Plynn follows Codex Desktop's selected local Git repository. Remote projects and parent folders of multiple repositories have no local code context. A manually chosen folder is used only if Codex's saved state cannot be read.")
             }
             Section {
                 Toggle("Use code vocabulary", isOn: $codeContextEnabled)
@@ -113,7 +113,7 @@ struct SettingsPane: View {
             } header: {
                 Text("Formatting")
             } footer: {
-                Text("Polish removes filler words, applies self-corrections, formats lists, and matches tone to the app — on-device via Apple Intelligence. Corrections you make right after a paste teach the dictionary automatically. Everything stays on this Mac.")
+                Text("Polish removes filler words, applies self-corrections, formats lists, and matches tone to the app. It prefers Apple Intelligence; otherwise it uses the optional Granite MLX server on this Mac. Without either, Plynn keeps rules-only formatting. Corrections you make right after a paste teach the dictionary automatically.")
             }
             Section {
                 Toggle("Sound effects", isOn: $soundEffects)
@@ -171,8 +171,8 @@ struct SettingsPane: View {
     }
 
     private var codexWorkspaceLabel: String {
-        guard let root = CodexDesktopWorkspace.configuredRoot else {
-            return codexDesktopWorkspace.isEmpty ? "Not selected" : "Folder unavailable"
+        guard let root = CodexDesktopWorkspace.activeRoot() else {
+            return "No local Git repository selected"
         }
         return root
     }

@@ -14,10 +14,13 @@ final class SpokenCodeContextTrialTests: XCTestCase {
         let context = ContextSnapshot(bundleID: "com.openai.codex", workspaceRoot: root,
             fileCandidates: WorkspaceFileIndex.candidates(at: root), codeSymbols: symbols, codeFiles: code.files)
         let formatter = TranscriptFormatter()
-        await formatter.warmLLM()
+        guard await formatter.polishEngine != nil else {
+            throw XCTSkip("Apple Intelligence is not available on this Mac")
+        }
+        await formatter.warmAppleFM()
         let polishEngine = await formatter.polishEngine
-        XCTAssertNotNil(polishEngine, "Local polish model must load")
         let engine = StreamingTranscriber()
+        await engine.setVocabulary(DictationVocabulary.build(personal: [], workspace: code))
         var rows: [[String: Any]] = []
         for (name, utterance) in [
             ("filename", "Open context snapshot dot swift"),

@@ -1,0 +1,88 @@
+FAIL rc=1 duration=59.23s captured=13347 bytes
+Test Suite 'Selected tests' started at 2026-09-12 18:06:48.024.
+Test Suite 'PlynnPackageTests.xctest' started at 2026-09-12 18:06:48.026.
+Test Suite 'CodeReferenceResolverTests' started at 2026-09-12 18:06:48.026.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' passed (0.006 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:88: error: -[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution] : XCTAssertTrue failed - Update the struct holding dictation context
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:88: error: -[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution] : XCTAssertTrue failed - Open the file that defines the context captured at the hot boundary.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:97: error: -[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution] : XCTAssertEqual failed: ("Update the struct holding dictation context") is not equal to ("Update RecordingEnvelope")
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testLocalModelSourceResolution]' failed (21.775 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' passed (0.160 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' passed (0.103 seconds).
+Test Suite 'CodeReferenceResolverTests' failed at 2026-09-12 18:07:10.073.
+	 Executed 6 tests, with 3 failures (0 unexpected) in 22.047 (22.048) seconds
+Test Suite 'CodeVocabularyTests' started at 2026-09-12 18:07:10.074.
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testMultiwordHintsAndAmbiguity]' started.
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testMultiwordHintsAndAmbiguity]' passed (0.000 seconds).
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testNativeGrammarsExtractCodeNotLiteralsOrComments]' started.
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testNativeGrammarsExtractCodeNotLiteralsOrComments]' passed (0.001 seconds).
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testPathBoundary]' started.
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testPathBoundary]' passed (0.000 seconds).
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testSelectedWorkspaceIndexAndRetrieval]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnCodeContextTests/CodeVocabularyTests.swift:41: -[PlynnCodeContextTests.CodeVocabularyTests testSelectedWorkspaceIndexAndRetrieval] : Test skipped - Set PLYNN_VALIDATE_WORKSPACE to exercise an explicitly selected repository
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testSelectedWorkspaceIndexAndRetrieval]' skipped (0.002 seconds).
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testWorkspaceRefreshIgnoresSecretsSymlinksAndDeletedFiles]' started.
+Test Case '-[PlynnCodeContextTests.CodeVocabularyTests testWorkspaceRefreshIgnoresSecretsSymlinksAndDeletedFiles]' passed (0.243 seconds).
+Test Suite 'CodeVocabularyTests' passed at 2026-09-12 18:07:10.321.
+	 Executed 5 tests, with 1 test skipped and 0 failures (0 unexpected) in 0.248 (0.248) seconds
+Test Suite 
+... byte window omitted ...
+IsSupported]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testExplicitSpokenAliasIsSupported]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.ReferenceResolverTests testFormatterTagsOnlyTechnicalApps]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testFormatterTagsOnlyTechnicalApps]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.ReferenceResolverTests testIgnoresNonFilenameTerms]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testIgnoresNonFilenameTerms]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.ReferenceResolverTests testSplitsCamelCaseFilename]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testSplitsCamelCaseFilename]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.ReferenceResolverTests testTagsSpokenFilename]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testTagsSpokenFilename]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.ReferenceResolverTests testTagsUniqueWorkspaceCandidateWithoutDictionaryTerm]' started.
+Test Case '-[PlynnKitTests.ReferenceResolverTests testTagsUniqueWorkspaceCandidateWithoutDictionaryTerm]' passed (0.000 seconds).
+Test Suite 'ReferenceResolverTests' passed at 2026-09-12 18:07:10.324.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'SpokenCodeContextTrialTests' started at 2026-09-12 18:07:10.324.
+Test Case '-[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline]' started.
+[18:07:16.164] [INFO] [FluidAudio.UnifiedStreaming] Using cached Parakeet Unified models at /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b
+[18:07:16.164] [INFO] [FluidAudio.UnifiedStreaming] Loading Parakeet Unified CoreML models from /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b...
+[18:07:16.757] [INFO] [FluidAudio.UnifiedStreaming] Parakeet Unified models loaded (latency 1120ms).
+[18:07:17.322] [INFO] [FluidAudio.DownloadUtils] Host environment: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[18:07:17.323] [INFO] [FluidAudio.DownloadUtils] Found silero-vad locally, no download needed
+[18:07:17.353] [INFO] [FluidAudio.DownloadUtils] Compiled model silero-vad-unified-256ms-v6.2.1.mlmodelc in 29.25 ms :: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[18:07:17.353] [INFO] [FluidAudio.VadManager] VAD model loaded successfully
+[18:07:17.353] [INFO] [FluidAudio.VadManager] VAD system initialized in 0.03s
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/SpokenCodeContextTrialTests.swift:69: error: -[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline] : XCTAssertTrue failed - file-description: raw=Open the file that defines the context captured at the hot boundary., output=Open the file that defines the context captured at the hot boundary.
+Test Case '-[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline]' failed (25.594 seconds).
+Test Suite 'SpokenCodeContextTrialTests' failed at 2026-09-12 18:07:35.918.
+	 Executed 1 test, with 1 failure (0 unexpected) in 25.594 (25.594) seconds
+Test Suite 'PlynnPackageTests.xctest' failed at 2026-09-12 18:07:35.918.
+	 Executed 19 tests, with 1 test skipped and 4 failures (0 unexpected) in 47.891 (47.892) seconds
+Test Suite 'Selected tests' failed at 2026-09-12 18:07:35.918.
+	 Executed 19 tests, with 1 test skipped and 4 failures (0 unexpected) in 47.891 (47.894) seconds
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct holding dictation context","output":"Update the struct holding dictation context","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":\"holds hotkey boundary context with file candidates and selected text\"}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext","CodexDesktopWorkspace"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update this drug holding dictation context","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":\"Context captured at the hotkey boundary for one formatting pass.\"}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodexCLIContext"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"input":"Update the struct that captures context at the hot boundary","output":"Update ContextSnapshot","response":"{\"symbol\":\"ContextSnapshot\",\"evidence\":\"Context captured at the hotkey boundary for one formatting pass.\"}"}
+SOURCE_MODEL {"candidates":[["ContextSnapshot"],["CodeContextProbeTests","test_coding_terms_split_without_losing_acronyms","test_repo_boundary_ignores_secrets_builds_and_symlinks"]],"files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"input":"Open the file that defines the context captured at the hot boundary.","output":"Open the file that defines the context captured at the hot boundary.","response":"{\"symbol\":\"struct ContextSnapshot\",\"evidence\":\"Context captured at the hotkey boundary for one formatting pass.\"}"}
+SOURCE_COUNTERFACTUAL Update the struct holding dictation context
+SOURCE_AMBIGUOUS Update the struct holding dictation context
+SOURCE_UNTRUSTED_COMMENT Update the struct holding dictation context
+SPOKEN_TRIAL {"asr_seconds":0.60529398918151855,"audio_seconds":2.2804375000000001,"case":"filename","engine_start_seconds":0.59576702117919922,"format_seconds":1.6329820156097412,"output":"Open @ContextSnapshot.swift","raw_asr":"Open context snapshot.swift","retrieved_files":[],"status":"passed","utterance":"Open context snapshot dot swift"}
+SPOKEN_TRIAL {"asr_seconds":0.57646095752716064,"audio_seconds":2.9203125000000001,"case":"symbols","engine_start_seconds":4.9948692321777344e-05,"format_seconds":1.6595350503921509,"output":"Update ContextSnapshot and preferredSpellings","raw_asr":"Update context snapshot and preferred spellings","retrieved_files":[],"status":"passed","utterance":"Update context snapshot and preferred spellings"}
+SPOKEN_TRIAL {"asr_seconds":0.43709492683410645,"audio_seconds":1.6060000000000001,"case":"prose","engine_start_seconds":3.6001205444335938e-05,"format_seconds":0.085867047309875488,"output":"Get user feedback tomorrow","raw_asr":"Get user feedback tomorrow","retrieved_files":[],"status":"passed","utterance":"Get user feedback tomorrow"}
+SPOKEN_TRIAL {"asr_seconds":0.68441402912139893,"audio_seconds":3.2686250000000001,"case":"description","engine_start_seconds":3.3974647521972656e-05,"format_seconds":2.9384560585021973,"output":"Update ContextSnapshot","raw_asr":"Update the struct that captures context at the hot boundary","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct that captures context at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":0.67348206043243408,"audio_seconds":3.7201249999999999,"case":"file-description","engine_start_seconds":2.9921531677246094e-05,"format_seconds":4.7284369468688965,"output":"Open the file that defines the context captured at the hot boundary.","raw_asr":"Open the file that defines the context captured at the hot boundary.","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","scripts\/test_code_context_probe.py"],"status":"failed","utterance":"Open the file that defines the context captured at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":0.7981569766998291,"audio_seconds":2.7113749999999999,"case":"paraphrase","engine_start_seconds":4.6014785766601562e-05,"format_seconds":3.065390944480896,"output":"Update ContextSnapshot","raw_asr":"Update this drug holding dictation context","retrieved_files":["Sources\/PlynnKit\/ContextSnapshot.swift","Sources\/PlynnKit\/CodexCLIContext.swift"],"status":"passed","utterance":"Update the struct holding dictation context"}
+SPOKEN_TRIAL {"asr_seconds":0.32038998603820801,"audio_seconds":1.1323749999999999,"case":"generic","engine_start_seconds":0.0001010894775390625,"format_seconds":0.085429906845092773,"output":"Update the struct","raw_asr":"Update the struct","retrieved_files":[],"status":"passed","utterance":"Update the struct"}
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+... output capped at 13000 bytes ...

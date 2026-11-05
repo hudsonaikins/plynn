@@ -73,9 +73,11 @@ final class CodeReferenceResolverTests: XCTestCase {
         let code = await WorkspaceCodeIndex().snapshot(at: root, includeSource: true)
         let actual = ContextSnapshot(bundleID: "com.openai.codex", codeSymbols: code.symbols, codeFiles: code.files)
         let formatter = TranscriptFormatter()
-        await formatter.warmLLM()
+        guard await formatter.polishEngine != nil else {
+            throw XCTSkip("Apple Intelligence is not available on this Mac")
+        }
+        await formatter.warmAppleFM()
         let engine = await formatter.polishEngine
-        XCTAssertNotNil(engine)
         for input in ["Update the struct holding dictation context",
                       "Update this drug holding dictation context",
                       "Update the struct that captures context at the hot boundary",

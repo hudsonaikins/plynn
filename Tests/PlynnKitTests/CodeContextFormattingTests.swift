@@ -50,21 +50,16 @@ final class CodeContextFormattingTests: XCTestCase {
         XCTAssertEqual(result.text, "Open @ContextSnapshot.swift")
     }
 
-    func testAvailableLocalModelPreservesGroundedNamesAndOrdinaryMeaning() async throws {
+    func testAppleIntelligencePreservesGroundedNamesAndOrdinaryMeaning() async throws {
         guard ProcessInfo.processInfo.environment["PLYNN_VALIDATE_CODE_MODEL"] == "1" else {
-            throw XCTSkip("Opt in to local model validation with PLYNN_VALIDATE_CODE_MODEL=1")
+            throw XCTSkip("Opt in to Apple Intelligence validation with PLYNN_VALIDATE_CODE_MODEL=1")
         }
         let formatter = TranscriptFormatter()
-        if await formatter.polishEngine == nil {
-            guard ProcessInfo.processInfo.environment["PLYNN_VALIDATE_QWEN"] == "1" else {
-                throw XCTSkip("Apple Intelligence unavailable; opt in to Qwen validation separately")
-            }
-            await formatter.warmLLM()
+        guard await formatter.polishEngine != nil else {
+            throw XCTSkip("Apple Intelligence is not available on this Mac")
         }
-        guard let engine = await formatter.polishEngine else {
-            XCTFail("Requested local model could not load")
-            return
-        }
+        await formatter.warmAppleFM()
+        let engine = await formatter.polishEngine ?? "Apple Intelligence"
         print("code-context validation engine: \(engine)")
         let sourceSymbols = try CodeVocabulary.parse(
             "func getQuokkaTelemetry() {}", file: "Telemetry.swift")

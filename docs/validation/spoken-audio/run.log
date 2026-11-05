@@ -1,0 +1,23 @@
+PASS rc=0 duration=75.45s captured=3187 bytes
+[17:28:16.513] [INFO] [FluidAudio.UnifiedStreaming] Using cached Parakeet Unified models at /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b
+[17:28:16.514] [INFO] [FluidAudio.UnifiedStreaming] Loading Parakeet Unified CoreML models from /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b...
+[17:28:49.600] [INFO] [FluidAudio.UnifiedStreaming] Parakeet Unified models loaded (latency 1120ms).
+[17:28:50.343] [INFO] [FluidAudio.DownloadUtils] Host environment: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[17:28:50.343] [INFO] [FluidAudio.DownloadUtils] Found silero-vad locally, no download needed
+[17:28:50.891] [INFO] [FluidAudio.DownloadUtils] Compiled model silero-vad-unified-256ms-v6.2.1.mlmodelc in 546.71 ms :: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[17:28:50.892] [INFO] [FluidAudio.VadManager] VAD model loaded successfully
+[17:28:50.892] [INFO] [FluidAudio.VadManager] VAD system initialized in 0.55s
+Test Case '-[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline]' passed (48.247 seconds).
+Test Suite 'SpokenCodeContextTrialTests' passed at 2026-09-12 17:28:57.472.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.247 (48.248) seconds
+Test Suite 'PlynnPackageTests.xctest' passed at 2026-09-12 17:28:57.472.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.247 (48.248) seconds
+Test Suite 'Selected tests' passed at 2026-09-12 17:28:57.472.
+	 Executed 1 test, with 0 failures (0 unexpected) in 48.247 (48.251) seconds
+SPOKEN_TRIAL {"asr_seconds":1.2983709573745728,"audio_seconds":2.2804375000000001,"case":"filename","engine_start_seconds":33.087797045707703,"format_seconds":2.1730300188064575,"output":"Open @ContextSnapshot.swift","raw_asr":"Open context snapshot.swift","status":"passed","utterance":"Open context snapshot dot swift"}
+SPOKEN_TRIAL {"asr_seconds":0.8805239200592041,"audio_seconds":2.9203125000000001,"case":"symbols","engine_start_seconds":0.00020003318786621094,"format_seconds":2.5513679981231689,"output":"Update ContextSnapshot and preferredSpellings","raw_asr":"Update context snapshot and preferred spellings","status":"passed","utterance":"Update context snapshot and preferred spellings"}
+SPOKEN_TRIAL {"asr_seconds":0.69750893115997314,"audio_seconds":1.6060000000000001,"case":"prose","engine_start_seconds":7.4982643127441406e-05,"format_seconds":0.15295803546905518,"output":"Get user feedback tomorrow","raw_asr":"Get user feedback tomorrow","status":"passed","utterance":"Get user feedback tomorrow"}
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

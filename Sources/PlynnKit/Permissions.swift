@@ -14,6 +14,11 @@ public enum Permissions {
         AXIsProcessTrusted()
     }
 
+    /// Loading the speech model is not a missing macOS permission.
+    public static func needsSetup(micGranted: Bool, accessibilityGranted: Bool) -> Bool {
+        !micGranted || !accessibilityGranted
+    }
+
     /// Globe key set to "Do Nothing" (0) so it can't fight Plynn's fn hotkey.
     public static func globeKeySafe() -> Bool {
         let defaults = UserDefaults(suiteName: "com.apple.HIToolbox")

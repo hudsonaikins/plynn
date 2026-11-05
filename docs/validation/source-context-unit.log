@@ -1,0 +1,102 @@
+FAIL rc=1 duration=9.07s captured=11436 bytes
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:38:68: error: call can throw but is not marked with 'try'
+36 |         let input = "Update the struct that captures context at the hotkey boundary"
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+   |                                                                    |- error: call can throw but is not marked with 'try'
+   |                                                                    |- note: did you mean to use 'try'?
+   |                                                                    |- note: did you mean to handle error as optional value?
+   |                                                                    `- note: did you mean to disable error propagation?
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:39:91: error: call can throw but is not marked with 'try'
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+   |                                                                                           |- error: call can throw but is not marked with 'try'
+   |                                                                                           |- note: did you mean to use 'try'?
+   |                                                                                           |- note: did you mean to handle error as optional value?
+   |                                                                                           `- note: did you mean to disable error propagation?
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+... 5 lines omitted ...
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+   |                                                                                  |- error: call can throw but is not marked with 'try'
+   |                                                                                  |- note: did you mean to use 'try'?
+   |                                                                                  |- note: did you mean to handle error as optional value?
+   |                                                                                  `- note: did you mean to disable error propagation?
+41 |         let original = try context()
+42 |         XCTAssertEqual(original.withFileCandidates(["a.swift"]).codeFiles, original.codeFiles)
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:38:68: error: call can throw but is not marked with 'try'
+36 |         let input = "Update the struct that captures context at the hotkey boundary"
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+   |                                                                    |- error: call can throw but is not marked with 'try'
+   |                                                                    |- note: did you mean to use 'try'?
+   |                                                                    |- note: did you mean to handle error as optional value?
+   |                                                                    `- note: did you mean to disable error propagation?
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:39:91: error: call can throw but is not marked with 'try'
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+   |                                                                                           |- error: call can throw but is not marked with 'try'
+   |                                                                                           |- note: did you mean to use 'try'?
+   |                                                                                           |- note: did you mean to handle error as optional value?
+   |                                                                                           `- note: did you mean to disable error propagation?
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+41 |         let original = try context()
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:40:82: error: call can throw but is not marked with 'try'
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+   |                                                                                  |- error: call can throw but is not marked with 'try'
+   |                                                                                  |- note: did you mean to use 'try'?
+   |                                                                                  |- note: did you mean to handle error as optional value?
+   |                                                                                  `- note: did you mean to disable error propagation?
+41 |         let original = try context()
+42 |         XCTAssertEqual(original.withFileCandidates(["a.swift"]).codeFiles, original.codeFiles)
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:38:68: error: call can throw but is not marked with 'try'
+36 |         let input = "Update the struct that captures context at the hotkey boundary"
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+   |                                                                    |- error: call can throw but is not marked with 'try'
+   |                                                                    |- note: did you mean to use 'try'?
+   |                                                                    |- note: did you mean to handle error as optional value?
+   |                                                                    `- note: did you mean to disable error propagation?
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:39:91: error: call can throw but is not marked with 'try'
+37 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: ContextSnapshot(bundleID: "com.openai.codex")))
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+   |                                                                                           |- error: call can throw but is not marked with 'try'
+   |                                                                                           |- note: did you mean to use 'try'?
+   |                                                                                           |- note: did you mean to handle error as optional value?
+   |                                                                                           `- note: did you mean to disable error propagation?
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+41 |         let original = try context()
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/CodeReferenceResolverTests.swift:40:82: error: call can throw but is not marked with 'try'
+38 |         XCTAssertNil(CodeReferenceResolver.prepare(input, context: context(bundleID: "com.apple.MobileSMS")))
+39 |         XCTAssertNil(CodeReferenceResolver.prepare("Get user feedback tomorrow", context: context()))
+40 |         XCTAssertNil(CodeReferenceResolver.prepare("Update the struct", context: context()))
+   |                                                                                  |- error: call can throw but is not marked with 'try'
+   |                                                                                  |- note: did you mean to use 'try'?
+   |                                                                                  |- note: did you mean to handle error as optional value?
+   |                                                                                  `- note: did you mean to disable error propagation?
+41 |         let original = try context()
+42 |         XCTAssertEqual(original.withFileCandidates(["a.swift"]).codeFiles, original.codeFiles)
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/main.swift:574:13: warning: result of 'try?' is unused [#no-usage]
+572 |                 title: title, transcriptWords: transcript.wordCount)
+573 |             try? store.updateMeeting(id: id, notes: body, status: notes == nil ? .failed : .ready)
+574 |             try? store.writeMarkdownFile(
+    |             `- warning: result of 'try?' is unused [#no-usage]
+575 |                 title: title, startedAt: started, notes: body,
+576 |                 transcript: transcript.plainText)
+
+error: fatalError

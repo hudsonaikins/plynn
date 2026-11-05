@@ -32,7 +32,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>26.0</string>
 	<key>LSUIElement</key>
-	<true/>
+	<false/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Plynn records your voice while you hold the fn key to transcribe it on-device.</string>
 	<key>SUFeedURL</key>

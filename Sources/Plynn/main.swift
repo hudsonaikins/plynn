@@ -65,10 +65,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
               Metrics.residentMB(), AXIsProcessTrusted() ? 1 : 0)
         setUpStatusItem()
 
-        if !Permissions.micGranted()
-            || !Permissions.accessibilityGranted()
-            || !engineManager.activeEngineReady {
+        if Permissions.needsSetup(
+            micGranted: Permissions.micGranted(),
+            accessibilityGranted: Permissions.accessibilityGranted()) {
             onboarding.show()
+        } else {
+            // Engine readiness is transient on every launch; show its status in Settings,
+            // not the permissions checklist when permission grants are already valid.
+            mainWindow.show(tab: .home)
         }
 
         // Picking a different activation key in Settings takes effect
@@ -90,7 +94,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 NSLog("plynn: [launch-to-ready %@] RSS %.0f MB",
                       "\(launchStartedAt.duration(to: .now))", Metrics.residentMB())
             }
-            await formatter.warmLLM()
+            await formatter.warmAppleFM()
             NSLog("plynn: polish engine %@; RSS %.0f MB",
                   await formatter.polishEngine ?? "none (rules only)", Metrics.residentMB())
             if let reason = await formatter.appleFMStatus {
@@ -128,7 +132,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if case .fnDown = event,
             session.state == .idle,
             !engineManager.activeEngineReady {
-            onboarding.show()
+            showError(engineManager.statusLine)
             Task { [engineManager] in _ = await engineManager.warmActiveEngine() }
             return
         }
@@ -168,9 +172,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 bundleID: bundleID,
                 selectedText: SelectionReader.selectedText(),
                 workspaceRoot: bundleID == CodexDesktopWorkspace.bundleID
-                    ? CodexDesktopWorkspace.configuredRoot
+                    ? CodexDesktopWorkspace.activeRoot()
                     : CodexCLIContextReader.read()?.workspaceRoot)
             pendingContext = context
+            pendingFileCandidates?.cancel()
+            pendingCodeSymbols?.cancel()
+            pendingFileCandidates = nil
+            pendingCodeSymbols = nil
             if context.profile.isTechnical, let workspaceRoot = context.workspaceRoot {
                 pendingFileCandidates = Task.detached(priority: .utility) {
                     WorkspaceFileIndex.candidates(at: workspaceRoot)
@@ -187,8 +195,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             chunkContinuation = continuation
             let engine = engineManager.engineForNewSession()
             sessionEngine = engine
+            let vocabularyTask = pendingCodeSymbols
+            let personalTerms = (try? store?.terms()) ?? []
             feedTask = Task { [weak self] in
                 do {
+                    let workspace = await vocabularyTask?.value ?? CodeWorkspaceContext()
+                    await engine.setVocabulary(DictationVocabulary.build(
+                        personal: personalTerms,
+                        workspace: workspace))
                     try await engine.start()
                 } catch {
                     guard !Task.isCancelled else { return }
@@ -707,8 +721,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func openSettings() { mainWindow.show(tab: .settings) }
     @objc func openSetup() { onboarding.show() }
 
-    /// Menu-bar app with no Dock icon: clicking Plynn.app in Finder/Launchpad
-    /// re-opens it — surface the Home window so the click visibly does something.
+    /// Clicking the Dock icon reopens Home when no Plynn window is visible.
     func applicationShouldHandleReopen(
         _ sender: NSApplication, hasVisibleWindows: Bool
     ) -> Bool {
@@ -758,5 +771,5 @@ extension AppDelegate: NSMenuDelegate {
 let app = NSApplication.shared
 let delegate = AppDelegate()
 app.delegate = delegate
-app.setActivationPolicy(.accessory)
+app.setActivationPolicy(.regular)
 app.run()

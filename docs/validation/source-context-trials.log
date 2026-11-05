@@ -1,0 +1,82 @@
+FAIL rc=1 duration=38.50s captured=9136 bytes
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/PersonalizationViews.swift:236:9: warning: result of 'try?' is unused [#no-usage]
+234 |             .map { $0.trimmingCharacters(in: .whitespaces) }
+235 |             .filter { !$0.isEmpty }
+236 |         try? store.addTerm(text: newTerm.trimmingCharacters(in: .whitespaces), aliases: aliases)
+    |         `- warning: result of 'try?' is unused [#no-usage]
+237 |         newTerm = ""
+238 |         newAliases = ""
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/PersonalizationViews.swift:248:9: warning: result of 'try?' is unused [#no-usage]
+246 |             let csv = try? String(contentsOf: url, encoding: .utf8)
+247 |         else { return }
+248 |         try? store.importTermsCSV(csv)
+    |         `- warning: result of 'try?' is unused [#no-usage]
+249 |         reload()
+250 |     }
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/PersonalizationViews.swift:303:9: warning: result of 'try?' is unused [#no-usage]
+301 | 
+302 |     private func add() {
+303 |         try? store.addSnippet(
+    |         `- warning: result of 'try?' is unused [#no-usage]
+304 |             trigger: newTrigger.trimmingCharacters(in: .whitespaces), expansion: newExpansion)
+305 |         newTrigger = ""
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/main.swift:574:13: warning: result of 'try?' is unused [#no-usage]
+572 |                 title: title, transcriptWords: transcript.wordCount)
+573 |             try? store.updateMeeting(id: id, notes: body, status: notes == nil ? .failed : .ready)
+574 |             try? store.writeMarkdownFile(
+    |             `- warning: result of 'try?' is unused [#no-usage]
+575 |                 title: title, startedAt: started, notes: body,
+576 |                 transcript: transcript.plainText)
+
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Sources/Plynn/main.swift:624:21: warning: result of 'try?' is unused [#no-usage]
+622 |                     try? store.addAlias(termID: existing.id, alias: fix.heard.lowercased())
+623 |                 } else {
+624 |                     try? store.addTerm(
+    |                     `- warning: result of 'try?' is unused [#no-usage]
+625 |                         text: fix.corrected, aliases: [fix.heard.lowercased()])
+626 |                 }
+Test Suite 'Selected tests' started at 2026-09-12 17:41:40.568.
+Test Suite 'PlynnPackageTests.xctest' started at 2026-09-12 17:41:40.571.
+Test Suite 'CodeReferenceResolverTests' started at 2026-09-12 17:41:40.571.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testFileReferencesAreBoundToSourcePath]' passed (0.006 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testOptInTechnicalAndDescriptiveBoundaries]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testRelevantExcerptsAreBoundedAndRejectUnrelatedFiles]' passed (0.180 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testSourceEvidenceAndConstrainedReplacement]' passed (0.001 seconds).
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' started.
+Test Case '-[PlynnKitTests.CodeReferenceResolverTests testUnavailableModelAndDisabledPolishKeepDescription]' passed (0.121 seconds).
+Test Suite 'CodeReferenceResolverTests' passed at 2026-09-12 17:41:40.880.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.309 (0.309) seconds
+Test Suite 'SpokenCodeContextTrialTests' started at 2026-09-12 17:41:40.880.
+Test Case '-[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline]' started.
+[17:41:47.316] [INFO] [FluidAudio.UnifiedStreaming] Using cached Parakeet Unified models at /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b
+[17:41:47.316] [INFO] [FluidAudio.UnifiedStreaming] Loading Parakeet Unified CoreML models from /Users/hudson/Library/Application Support/FluidAudio/Models/parakeet-unified-en-0.6b...
+[17:41:47.783] [INFO] [FluidAudio.UnifiedStreaming] Parakeet Unified models loaded (latency 1120ms).
+[17:41:48.385] [INFO] [FluidAudio.DownloadUtils] Host environment: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[17:41:48.385] [INFO] [FluidAudio.DownloadUtils] Found silero-vad locally, no download needed
+[17:41:48.417] [INFO] [FluidAudio.DownloadUtils] Compiled model silero-vad-unified-256ms-v6.2.1.mlmodelc in 31.04 ms :: macOS Version 26.6.2 (Build 25G83), arch=arm64, chip=Apple M1 Pro, cores=8/8, mem=16 GB, rosetta=false
+[17:41:48.417] [INFO] [FluidAudio.VadManager] VAD model loaded successfully
+[17:41:48.417] [INFO] [FluidAudio.VadManager] VAD system initialized in 0.03s
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/SpokenCodeContextTrialTests.swift:65: error: -[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline] : XCTAssertTrue failed - description: raw=Update the struct that captures context at the hot boundary, output=Update the struct that captures context at the hot boundary
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/SpokenCodeContextTrialTests.swift:65: error: -[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline] : XCTAssertTrue failed - file-description: raw=Open the file that defines the context captured at the hot boundary., output=Open the file that defines the context captured at the hot boundary.
+Test Case '-[PlynnKitTests.SpokenCodeContextTrialTests testSynthesizedSpeechThroughStreamingPipeline]' failed (27.200 seconds).
+Test Suite 'SpokenCodeContextTrialTests' failed at 2026-09-12 17:42:08.080.
+	 Executed 1 test, with 2 failures (0 unexpected) in 27.200 (27.200) seconds
+Test Suite 'PlynnPackageTests.xctest' failed at 2026-09-12 17:42:08.080.
+	 Executed 6 tests, with 2 failures (0 unexpected) in 27.508 (27.509) seconds
+Test Suite 'Selected tests' failed at 2026-09-12 17:42:08.080.
+	 Executed 6 tests, with 2 failures (0 unexpected) in 27.508 (27.512) seconds
+SPOKEN_TRIAL {"asr_seconds":0.64565896987915039,"audio_seconds":2.2804375000000001,"case":"filename","engine_start_seconds":0.46679902076721191,"format_seconds":1.6405950784683228,"output":"Open @ContextSnapshot.swift","raw_asr":"Open context snapshot.swift","retrieved_files":[],"status":"passed","utterance":"Open context snapshot dot swift"}
+SPOKEN_TRIAL {"asr_seconds":0.64005208015441895,"audio_seconds":2.9203125000000001,"case":"symbols","engine_start_seconds":3.8981437683105469e-05,"format_seconds":1.6417679786682129,"output":"Update ContextSnapshot and preferredSpellings","raw_asr":"Update context snapshot and preferred spellings","retrieved_files":[],"status":"passed","utterance":"Update context snapshot and preferred spellings"}
+SPOKEN_TRIAL {"asr_seconds":0.41687703132629395,"audio_seconds":1.6060000000000001,"case":"prose","engine_start_seconds":2.5033950805664062e-05,"format_seconds":0.08012998104095459,"output":"Get user feedback tomorrow","raw_asr":"Get user feedback tomorrow","retrieved_files":[],"status":"passed","utterance":"Get user feedback tomorrow"}
+SPOKEN_TRIAL {"asr_seconds":0.64697301387786865,"audio_seconds":3.2686250000000001,"case":"description","engine_start_seconds":2.9921531677246094e-05,"format_seconds":5.6449199914932251,"output":"Update the struct that captures context at the hot boundary","raw_asr":"Update the struct that captures context at the hot boundary","retrieved_files":["Tests\/PlynnKitTests\/SpokenCodeContextTrialTests.swift","Tests\/PlynnKitTests\/CodeReferenceResolverTests.swift","Sources\/PlynnKit\/ContextSnapshot.swift"],"status":"failed","utterance":"Update the struct that captures context at the hotkey boundary"}
+SPOKEN_TRIAL {"asr_seconds":1.2763569355010986,"audio_seconds":3.7201249999999999,"case":"file-description","engine_start_seconds":3.2067298889160156e-05,"format_seconds":7.0630090236663818,"output":"Open the file that defines the context captured at the hot boundary.","raw_asr":"Open the file that defines the context captured at the hot boundary.","retrieved_files":["Tests\/PlynnKitTests\/SpokenCodeContextTrialTests.swift","Sources\/PlynnKit\/ContextSnapshot.swift","Tests\/PlynnKitTests\/CodeReferenceResolverTests.swift"],"status":"failed","utterance":"Open the file that defines the context captured at the hotkey boundary"}
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

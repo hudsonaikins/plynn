@@ -1,0 +1,41 @@
+PASS rc=0 duration=15.38s captured=43822 bytes
+Test Case '-[PlynnKitTests.TextPersonalizerTests testTriggerWithAdjacentPunctuation]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.TextPersonalizerTests testWholeWordOnly]' started.
+Test Case '-[PlynnKitTests.TextPersonalizerTests testWholeWordOnly]' passed (0.000 seconds).
+Test Suite 'TextPersonalizerTests' passed at 2026-09-12 16:27:26.584.
+	 Executed 22 tests, with 0 failures (0 unexpected) in 0.006 (0.007) seconds
+Test Suite 'TranscriberTests' started at 2026-09-12 16:27:26.585.
+Test Case '-[PlynnKitTests.TranscriberTests testLatencyBudgetOnLongUtterance]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/TestHelpers.swift:8: -[PlynnKitTests.TranscriberTests testLatencyBudgetOnLongUtterance] : Test skipped - Model integration tests disabled; set PLYNN_RUN_MODEL_TESTS=1 to run them
+Test Case '-[PlynnKitTests.TranscriberTests testLatencyBudgetOnLongUtterance]' skipped (0.000 seconds).
+Test Case '-[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/TestHelpers.swift:8: -[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty] : Test skipped - Model integration tests disabled; set PLYNN_RUN_MODEL_TESTS=1 to run them
+Test Case '-[PlynnKitTests.TranscriberTests testShortUtteranceIsNotEmpty]' skipped (0.000 seconds).
+Test Case '-[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture]' started.
+/Users/hudson/Documents/Codex/2026-08-25/re/work/PlynnCodeContext/Tests/PlynnKitTests/TestHelpers.swift:8: -[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture] : Test skipped - Model integration tests disabled; set PLYNN_RUN_MODEL_TESTS=1 to run them
+Test Case '-[PlynnKitTests.TranscriberTests testTranscribesSentenceFixture]' skipped (0.000 seconds).
+Test Suite 'TranscriberTests' passed at 2026-09-12 16:27:26.585.
+	 Executed 3 tests, with 3 tests skipped and 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'TransformPromptTests' started at 2026-09-12 16:27:26.585.
+Test Case '-[PlynnKitTests.TransformPromptTests testPromptCarriesTextAndInstruction]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testPromptCarriesTextAndInstruction]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.TransformPromptTests testRunawayGuardScalesWithSelection]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testRunawayGuardScalesWithSelection]' passed (0.000 seconds).
+Test Case '-[PlynnKitTests.TransformPromptTests testSanitizeSharedGuards]' started.
+Test Case '-[PlynnKitTests.TransformPromptTests testSanitizeSharedGuards]' passed (0.000 seconds).
+Test Suite 'TransformPromptTests' passed at 2026-09-12 16:27:26.586.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'PlynnPackageTests.xctest' passed at 2026-09-12 16:27:26.586.
+	 Executed 178 tests, with 10 tests skipped and 0 failures (0 unexpected) in 12.637 (12.655) seconds
+Test Suite 'All tests' passed at 2026-09-12 16:27:26.586.
+	 Executed 178 tests, with 10 tests skipped and 0 failures (0 unexpected) in 12.637 (12.656) seconds
+code-context validation engine: Qwen3-4B (local)
+CODE_CONTEXT_MODEL {"ambiguous_prose_output":"Get user feedback tomorrow","coding_output":"Call getQuokkaTelemetry after startup","engine":"Qwen3-4B (local)","prose_output":"Buy groceries tomorrow"}
+CODE_CONTEXT_WORKSPACE symbols=5181 hints=2 elapsed=0.684257083 seconds
+cold-start=0.112723042 seconds warm-start=0.027893416 seconds
+fn-release-to-paste=0.048435208 seconds
+launch-to-ready=0.05446925 seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

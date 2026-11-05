@@ -9,9 +9,13 @@ public actor StreamingTranscriber: DictationEngine {
     /// Keep one model graph warm for predictable memory and startup behavior.
     /// Change this only after a measured replacement is accepted.
     private static let variant = StreamingModelVariant.parakeetUnified1120ms
-    private var manager: (any StreamingAsrManager)?
+    private var manager: StreamingUnifiedAsrManager?
     private var vad: VadManager?
     private var sessionSamples: [Float] = []
+    private var desiredVocabulary: [DictationVocabularyTerm] = []
+    private var configuredVocabulary: [DictationVocabularyTerm] = []
+    private var ctcModels: CtcModels?
+    private var vocabularyLoadTask: Task<Void, Never>?
 
     /// parakeetUnified1120ms shares its model repo with the offline batch path —
     /// one download covers both — and beats the 2080ms tier on WER and latency.
@@ -20,11 +24,53 @@ public actor StreamingTranscriber: DictationEngine {
     /// Load models (idempotent) and reset for a new session.
     public func start() async throws {
         if manager == nil {
-            manager = Self.variant.createManager()
+            manager = StreamingUnifiedAsrManager(
+                config: Self.variant.unifiedConfig ?? UnifiedConfig())
             try await manager!.loadModels()
         }
+        try await configureVocabularyIfReady()
         try await manager!.reset()
         sessionSamples.removeAll(keepingCapacity: true)
+    }
+
+    /// Update vocabulary without delaying microphone startup. The auxiliary
+    /// CTC model downloads once in the background; boosting starts next session.
+    public func setVocabulary(_ terms: [DictationVocabularyTerm]) async {
+        var seen: Set<String> = []
+        desiredVocabulary = Array(terms.filter {
+            seen.insert($0.text.lowercased()).inserted
+        }.prefix(64))
+        guard !desiredVocabulary.isEmpty, ctcModels == nil, vocabularyLoadTask == nil else {
+            return
+        }
+        vocabularyLoadTask = Task { [weak self] in
+            do {
+                let models = try await CtcModels.downloadAndLoad(variant: .ctc110m)
+                await self?.finishVocabularyLoad(models)
+            } catch {
+                NSLog("plynn: vocabulary model unavailable: %@", String(describing: error))
+                await self?.finishVocabularyLoad(nil)
+            }
+        }
+    }
+
+    private func finishVocabularyLoad(_ models: CtcModels?) {
+        ctcModels = models
+        vocabularyLoadTask = nil
+        if models != nil { NSLog("plynn: local vocabulary boosting ready") }
+    }
+
+    private func configureVocabularyIfReady() async throws {
+        guard desiredVocabulary != configuredVocabulary,
+              let manager, let ctcModels else { return }
+        let terms = desiredVocabulary.map {
+            CustomVocabularyTerm(text: $0.text, aliases: $0.aliases)
+        }
+        try await manager.configureVocabularyBoosting(
+            vocabulary: CustomVocabularyContext(terms: terms),
+            ctcModels: ctcModels)
+        configuredVocabulary = desiredVocabulary
+        NSLog("plynn: vocabulary boosting configured with %d terms", terms.count)
     }
 
     public func setPartialCallback(_ callback: @escaping @Sendable (String) -> Void) async {

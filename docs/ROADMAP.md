@@ -26,11 +26,10 @@ Fully local dictation for macOS. Everything on device, always.
   - Sparkle auto updates, notarized DMG, GitHub release pipeline.
 
 - **Phase 5, power features**
-  - **Custom polish models you can swap in Settings.** Pick the model that
-    does AI polish: Apple Intelligence (the default), the bundled Qwen3 4B,
-    or any MLX community model ID pasted into Settings and run locally. The
-    engine abstraction already supports this; the remaining work is the
-    Settings UI and download management.
+  - **Benchmark the optional Granite MLX fallback.** Apple Intelligence remains
+    the preferred polish engine; Granite 3.3 2B runs as a separate loopback
+    service. Compare coding-dictation quality, latency, and memory use before
+    enabling it by default or shipping a managed server.
   - A max accuracy re transcription pass (Whisper large v3 turbo) for noisy
     audio.
   - Dictionary boosting inside the recognizer itself (CTC keyword spotting,
